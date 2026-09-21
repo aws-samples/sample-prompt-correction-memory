@@ -1,0 +1,1857 @@
+{
+  "timestamp": "2026-07-06T21:11:17Z",
+  "summary": {
+    "effective_date": {
+      "to_90pct": 6,
+      "to_95pct": 10,
+      "to_rule_graduation": null
+    },
+    "party_a": {
+      "to_90pct": 7,
+      "to_95pct": 11,
+      "to_rule_graduation": null
+    },
+    "party_b": {
+      "to_90pct": 7,
+      "to_95pct": 12,
+      "to_rule_graduation": null
+    },
+    "payment_terms": {
+      "to_90pct": 5,
+      "to_95pct": 5,
+      "to_rule_graduation": 5
+    },
+    "governing_law": {
+      "to_90pct": 6,
+      "to_95pct": 11,
+      "to_rule_graduation": null
+    }
+  },
+  "fields": [
+    {
+      "field_name": "effective_date",
+      "corrections_to_90": 6,
+      "corrections_to_95": 10,
+      "corrections_to_rule": null,
+      "curve": [
+        {
+          "corrections": 0,
+          "accuracy": 0.75,
+          "self_heal_rate": 0.375,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004875
+        },
+        {
+          "corrections": 1,
+          "accuracy": 0.7928,
+          "self_heal_rate": 0.3109,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004554
+        },
+        {
+          "corrections": 2,
+          "accuracy": 0.8278,
+          "self_heal_rate": 0.2583,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004291
+        },
+        {
+          "corrections": 3,
+          "accuracy": 0.8566,
+          "self_heal_rate": 0.2152,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004076
+        },
+        {
+          "corrections": 4,
+          "accuracy": 0.8801,
+          "self_heal_rate": 0.1798,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003899
+        },
+        {
+          "corrections": 5,
+          "accuracy": 0.8994,
+          "self_heal_rate": 0.1508,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003754
+        },
+        {
+          "corrections": 6,
+          "accuracy": 0.9153,
+          "self_heal_rate": 0.1271,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003635
+        },
+        {
+          "corrections": 7,
+          "accuracy": 0.9283,
+          "self_heal_rate": 0.1076,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003538
+        },
+        {
+          "corrections": 8,
+          "accuracy": 0.939,
+          "self_heal_rate": 0.0916,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003458
+        },
+        {
+          "corrections": 9,
+          "accuracy": 0.9477,
+          "self_heal_rate": 0.0785,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003392
+        },
+        {
+          "corrections": 10,
+          "accuracy": 0.9549,
+          "self_heal_rate": 0.0677,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003339
+        },
+        {
+          "corrections": 11,
+          "accuracy": 0.9607,
+          "self_heal_rate": 0.0589,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003295
+        },
+        {
+          "corrections": 12,
+          "accuracy": 0.9656,
+          "self_heal_rate": 0.0517,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003258
+        },
+        {
+          "corrections": 13,
+          "accuracy": 0.9695,
+          "self_heal_rate": 0.0457,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003229
+        },
+        {
+          "corrections": 14,
+          "accuracy": 0.9727,
+          "self_heal_rate": 0.0409,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003204
+        },
+        {
+          "corrections": 15,
+          "accuracy": 0.9754,
+          "self_heal_rate": 0.0369,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003185
+        },
+        {
+          "corrections": 16,
+          "accuracy": 0.9776,
+          "self_heal_rate": 0.0336,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003168
+        },
+        {
+          "corrections": 17,
+          "accuracy": 0.9794,
+          "self_heal_rate": 0.031,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003155
+        },
+        {
+          "corrections": 18,
+          "accuracy": 0.9808,
+          "self_heal_rate": 0.0288,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003144
+        },
+        {
+          "corrections": 19,
+          "accuracy": 0.982,
+          "self_heal_rate": 0.027,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003135
+        },
+        {
+          "corrections": 20,
+          "accuracy": 0.983,
+          "self_heal_rate": 0.0255,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003127
+        },
+        {
+          "corrections": 21,
+          "accuracy": 0.9838,
+          "self_heal_rate": 0.0243,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 22,
+          "accuracy": 0.9845,
+          "self_heal_rate": 0.0233,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003116
+        },
+        {
+          "corrections": 23,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003112
+        },
+        {
+          "corrections": 24,
+          "accuracy": 0.9855,
+          "self_heal_rate": 0.0218,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003109
+        },
+        {
+          "corrections": 25,
+          "accuracy": 0.9858,
+          "self_heal_rate": 0.0212,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003106
+        },
+        {
+          "corrections": 26,
+          "accuracy": 0.9861,
+          "self_heal_rate": 0.0208,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003104
+        },
+        {
+          "corrections": 27,
+          "accuracy": 0.9864,
+          "self_heal_rate": 0.0204,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003102
+        },
+        {
+          "corrections": 28,
+          "accuracy": 0.9866,
+          "self_heal_rate": 0.0201,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003101
+        },
+        {
+          "corrections": 29,
+          "accuracy": 0.9867,
+          "self_heal_rate": 0.0199,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003099
+        },
+        {
+          "corrections": 30,
+          "accuracy": 0.9869,
+          "self_heal_rate": 0.0197,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003098
+        },
+        {
+          "corrections": 31,
+          "accuracy": 0.987,
+          "self_heal_rate": 0.0195,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003098
+        },
+        {
+          "corrections": 32,
+          "accuracy": 0.9871,
+          "self_heal_rate": 0.0194,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003097
+        },
+        {
+          "corrections": 33,
+          "accuracy": 0.9872,
+          "self_heal_rate": 0.0193,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003096
+        },
+        {
+          "corrections": 34,
+          "accuracy": 0.9872,
+          "self_heal_rate": 0.0192,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003096
+        },
+        {
+          "corrections": 35,
+          "accuracy": 0.9873,
+          "self_heal_rate": 0.0191,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003095
+        },
+        {
+          "corrections": 36,
+          "accuracy": 0.9873,
+          "self_heal_rate": 0.019,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003095
+        },
+        {
+          "corrections": 37,
+          "accuracy": 0.9873,
+          "self_heal_rate": 0.019,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003095
+        },
+        {
+          "corrections": 38,
+          "accuracy": 0.9874,
+          "self_heal_rate": 0.0189,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003095
+        },
+        {
+          "corrections": 39,
+          "accuracy": 0.9874,
+          "self_heal_rate": 0.0189,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003095
+        },
+        {
+          "corrections": 40,
+          "accuracy": 0.9874,
+          "self_heal_rate": 0.0189,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 41,
+          "accuracy": 0.9874,
+          "self_heal_rate": 0.0189,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 42,
+          "accuracy": 0.9874,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 43,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 44,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 45,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 46,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 47,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 48,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 49,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        },
+        {
+          "corrections": 50,
+          "accuracy": 0.9875,
+          "self_heal_rate": 0.0188,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003094
+        }
+      ]
+    },
+    {
+      "field_name": "party_a",
+      "corrections_to_90": 7,
+      "corrections_to_95": 11,
+      "corrections_to_rule": null,
+      "curve": [
+        {
+          "corrections": 0,
+          "accuracy": 0.7,
+          "self_heal_rate": 0.45,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00525
+        },
+        {
+          "corrections": 1,
+          "accuracy": 0.7513,
+          "self_heal_rate": 0.3731,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004865
+        },
+        {
+          "corrections": 2,
+          "accuracy": 0.7934,
+          "self_heal_rate": 0.31,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00455
+        },
+        {
+          "corrections": 3,
+          "accuracy": 0.8279,
+          "self_heal_rate": 0.2582,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004291
+        },
+        {
+          "corrections": 4,
+          "accuracy": 0.8561,
+          "self_heal_rate": 0.2158,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004079
+        },
+        {
+          "corrections": 5,
+          "accuracy": 0.8793,
+          "self_heal_rate": 0.181,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003905
+        },
+        {
+          "corrections": 6,
+          "accuracy": 0.8984,
+          "self_heal_rate": 0.1525,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003762
+        },
+        {
+          "corrections": 7,
+          "accuracy": 0.914,
+          "self_heal_rate": 0.1291,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003645
+        },
+        {
+          "corrections": 8,
+          "accuracy": 0.9267,
+          "self_heal_rate": 0.1099,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003549
+        },
+        {
+          "corrections": 9,
+          "accuracy": 0.9372,
+          "self_heal_rate": 0.0942,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003471
+        },
+        {
+          "corrections": 10,
+          "accuracy": 0.9458,
+          "self_heal_rate": 0.0813,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003406
+        },
+        {
+          "corrections": 11,
+          "accuracy": 0.9529,
+          "self_heal_rate": 0.0707,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003353
+        },
+        {
+          "corrections": 12,
+          "accuracy": 0.9587,
+          "self_heal_rate": 0.062,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00331
+        },
+        {
+          "corrections": 13,
+          "accuracy": 0.9634,
+          "self_heal_rate": 0.0549,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003274
+        },
+        {
+          "corrections": 14,
+          "accuracy": 0.9673,
+          "self_heal_rate": 0.0491,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003245
+        },
+        {
+          "corrections": 15,
+          "accuracy": 0.9705,
+          "self_heal_rate": 0.0443,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003221
+        },
+        {
+          "corrections": 16,
+          "accuracy": 0.9731,
+          "self_heal_rate": 0.0404,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003202
+        },
+        {
+          "corrections": 17,
+          "accuracy": 0.9752,
+          "self_heal_rate": 0.0371,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003186
+        },
+        {
+          "corrections": 18,
+          "accuracy": 0.977,
+          "self_heal_rate": 0.0345,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003173
+        },
+        {
+          "corrections": 19,
+          "accuracy": 0.9784,
+          "self_heal_rate": 0.0323,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003162
+        },
+        {
+          "corrections": 20,
+          "accuracy": 0.9796,
+          "self_heal_rate": 0.0306,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003153
+        },
+        {
+          "corrections": 21,
+          "accuracy": 0.9806,
+          "self_heal_rate": 0.0291,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003146
+        },
+        {
+          "corrections": 22,
+          "accuracy": 0.9814,
+          "self_heal_rate": 0.0279,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00314
+        },
+        {
+          "corrections": 23,
+          "accuracy": 0.982,
+          "self_heal_rate": 0.027,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003135
+        },
+        {
+          "corrections": 24,
+          "accuracy": 0.9826,
+          "self_heal_rate": 0.0262,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003131
+        },
+        {
+          "corrections": 25,
+          "accuracy": 0.983,
+          "self_heal_rate": 0.0255,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003127
+        },
+        {
+          "corrections": 26,
+          "accuracy": 0.9834,
+          "self_heal_rate": 0.025,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003125
+        },
+        {
+          "corrections": 27,
+          "accuracy": 0.9837,
+          "self_heal_rate": 0.0245,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003123
+        },
+        {
+          "corrections": 28,
+          "accuracy": 0.9839,
+          "self_heal_rate": 0.0242,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 29,
+          "accuracy": 0.9841,
+          "self_heal_rate": 0.0239,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003119
+        },
+        {
+          "corrections": 30,
+          "accuracy": 0.9843,
+          "self_heal_rate": 0.0236,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003118
+        },
+        {
+          "corrections": 31,
+          "accuracy": 0.9844,
+          "self_heal_rate": 0.0234,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003117
+        },
+        {
+          "corrections": 32,
+          "accuracy": 0.9845,
+          "self_heal_rate": 0.0232,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003116
+        },
+        {
+          "corrections": 33,
+          "accuracy": 0.9846,
+          "self_heal_rate": 0.0231,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003116
+        },
+        {
+          "corrections": 34,
+          "accuracy": 0.9847,
+          "self_heal_rate": 0.023,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003115
+        },
+        {
+          "corrections": 35,
+          "accuracy": 0.9847,
+          "self_heal_rate": 0.0229,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003115
+        },
+        {
+          "corrections": 36,
+          "accuracy": 0.9848,
+          "self_heal_rate": 0.0228,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003114
+        },
+        {
+          "corrections": 37,
+          "accuracy": 0.9848,
+          "self_heal_rate": 0.0228,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003114
+        },
+        {
+          "corrections": 38,
+          "accuracy": 0.9848,
+          "self_heal_rate": 0.0227,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003114
+        },
+        {
+          "corrections": 39,
+          "accuracy": 0.9849,
+          "self_heal_rate": 0.0227,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 40,
+          "accuracy": 0.9849,
+          "self_heal_rate": 0.0227,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 41,
+          "accuracy": 0.9849,
+          "self_heal_rate": 0.0226,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 42,
+          "accuracy": 0.9849,
+          "self_heal_rate": 0.0226,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 43,
+          "accuracy": 0.9849,
+          "self_heal_rate": 0.0226,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 44,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0226,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 45,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0226,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 46,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 47,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 48,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 49,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 50,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        }
+      ]
+    },
+    {
+      "field_name": "party_b",
+      "corrections_to_90": 7,
+      "corrections_to_95": 12,
+      "corrections_to_rule": null,
+      "curve": [
+        {
+          "corrections": 0,
+          "accuracy": 0.68,
+          "self_heal_rate": 0.22,
+          "rules_graduated": 0,
+          "cost_per_field": 0.0054
+        },
+        {
+          "corrections": 1,
+          "accuracy": 0.7347,
+          "self_heal_rate": 0.3979,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00499
+        },
+        {
+          "corrections": 2,
+          "accuracy": 0.7796,
+          "self_heal_rate": 0.3306,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004653
+        },
+        {
+          "corrections": 3,
+          "accuracy": 0.8164,
+          "self_heal_rate": 0.2754,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004377
+        },
+        {
+          "corrections": 4,
+          "accuracy": 0.8466,
+          "self_heal_rate": 0.2302,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004151
+        },
+        {
+          "corrections": 5,
+          "accuracy": 0.8713,
+          "self_heal_rate": 0.1931,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003965
+        },
+        {
+          "corrections": 6,
+          "accuracy": 0.8916,
+          "self_heal_rate": 0.1626,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003813
+        },
+        {
+          "corrections": 7,
+          "accuracy": 0.9082,
+          "self_heal_rate": 0.1377,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003688
+        },
+        {
+          "corrections": 8,
+          "accuracy": 0.9219,
+          "self_heal_rate": 0.1172,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003586
+        },
+        {
+          "corrections": 9,
+          "accuracy": 0.933,
+          "self_heal_rate": 0.1004,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003502
+        },
+        {
+          "corrections": 10,
+          "accuracy": 0.9422,
+          "self_heal_rate": 0.0867,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003433
+        },
+        {
+          "corrections": 11,
+          "accuracy": 0.9497,
+          "self_heal_rate": 0.0754,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003377
+        },
+        {
+          "corrections": 12,
+          "accuracy": 0.9559,
+          "self_heal_rate": 0.0661,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003331
+        },
+        {
+          "corrections": 13,
+          "accuracy": 0.961,
+          "self_heal_rate": 0.0586,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003293
+        },
+        {
+          "corrections": 14,
+          "accuracy": 0.9651,
+          "self_heal_rate": 0.0523,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003262
+        },
+        {
+          "corrections": 15,
+          "accuracy": 0.9685,
+          "self_heal_rate": 0.0472,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003236
+        },
+        {
+          "corrections": 16,
+          "accuracy": 0.9713,
+          "self_heal_rate": 0.0431,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003215
+        },
+        {
+          "corrections": 17,
+          "accuracy": 0.9736,
+          "self_heal_rate": 0.0396,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003198
+        },
+        {
+          "corrections": 18,
+          "accuracy": 0.9755,
+          "self_heal_rate": 0.0368,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003184
+        },
+        {
+          "corrections": 19,
+          "accuracy": 0.977,
+          "self_heal_rate": 0.0345,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003173
+        },
+        {
+          "corrections": 20,
+          "accuracy": 0.9783,
+          "self_heal_rate": 0.0326,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003163
+        },
+        {
+          "corrections": 21,
+          "accuracy": 0.9793,
+          "self_heal_rate": 0.0311,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003155
+        },
+        {
+          "corrections": 22,
+          "accuracy": 0.9801,
+          "self_heal_rate": 0.0298,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003149
+        },
+        {
+          "corrections": 23,
+          "accuracy": 0.9808,
+          "self_heal_rate": 0.0287,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003144
+        },
+        {
+          "corrections": 24,
+          "accuracy": 0.9814,
+          "self_heal_rate": 0.0279,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003139
+        },
+        {
+          "corrections": 25,
+          "accuracy": 0.9819,
+          "self_heal_rate": 0.0272,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003136
+        },
+        {
+          "corrections": 26,
+          "accuracy": 0.9823,
+          "self_heal_rate": 0.0266,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003133
+        },
+        {
+          "corrections": 27,
+          "accuracy": 0.9826,
+          "self_heal_rate": 0.0261,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003131
+        },
+        {
+          "corrections": 28,
+          "accuracy": 0.9828,
+          "self_heal_rate": 0.0258,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003129
+        },
+        {
+          "corrections": 29,
+          "accuracy": 0.983,
+          "self_heal_rate": 0.0254,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003127
+        },
+        {
+          "corrections": 30,
+          "accuracy": 0.9832,
+          "self_heal_rate": 0.0252,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003126
+        },
+        {
+          "corrections": 31,
+          "accuracy": 0.9834,
+          "self_heal_rate": 0.025,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003125
+        },
+        {
+          "corrections": 32,
+          "accuracy": 0.9835,
+          "self_heal_rate": 0.0248,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003124
+        },
+        {
+          "corrections": 33,
+          "accuracy": 0.9836,
+          "self_heal_rate": 0.0247,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003123
+        },
+        {
+          "corrections": 34,
+          "accuracy": 0.9836,
+          "self_heal_rate": 0.0245,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003123
+        },
+        {
+          "corrections": 35,
+          "accuracy": 0.9837,
+          "self_heal_rate": 0.0244,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003122
+        },
+        {
+          "corrections": 36,
+          "accuracy": 0.9838,
+          "self_heal_rate": 0.0244,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003122
+        },
+        {
+          "corrections": 37,
+          "accuracy": 0.9838,
+          "self_heal_rate": 0.0243,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 38,
+          "accuracy": 0.9838,
+          "self_heal_rate": 0.0242,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 39,
+          "accuracy": 0.9839,
+          "self_heal_rate": 0.0242,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 40,
+          "accuracy": 0.9839,
+          "self_heal_rate": 0.0242,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 41,
+          "accuracy": 0.9839,
+          "self_heal_rate": 0.0241,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 42,
+          "accuracy": 0.9839,
+          "self_heal_rate": 0.0241,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003121
+        },
+        {
+          "corrections": 43,
+          "accuracy": 0.9839,
+          "self_heal_rate": 0.0241,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 44,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.0241,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 45,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.0241,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 46,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.024,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 47,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.024,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 48,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.024,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 49,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.024,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        },
+        {
+          "corrections": 50,
+          "accuracy": 0.984,
+          "self_heal_rate": 0.024,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00312
+        }
+      ]
+    },
+    {
+      "field_name": "payment_terms",
+      "corrections_to_90": 5,
+      "corrections_to_95": 5,
+      "corrections_to_rule": 5,
+      "curve": [
+        {
+          "corrections": 0,
+          "accuracy": 0.55,
+          "self_heal_rate": 0.35,
+          "rules_graduated": 0,
+          "cost_per_field": 0.006375
+        },
+        {
+          "corrections": 1,
+          "accuracy": 0.627,
+          "self_heal_rate": 0.273,
+          "rules_graduated": 0,
+          "cost_per_field": 0.005798
+        },
+        {
+          "corrections": 2,
+          "accuracy": 0.69,
+          "self_heal_rate": 0.21,
+          "rules_graduated": 0,
+          "cost_per_field": 0.005325
+        },
+        {
+          "corrections": 3,
+          "accuracy": 0.7418,
+          "self_heal_rate": 0.3873,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004937
+        },
+        {
+          "corrections": 4,
+          "accuracy": 0.7842,
+          "self_heal_rate": 0.3237,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004618
+        },
+        {
+          "corrections": 5,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 6,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 7,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 8,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 9,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 10,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 11,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 12,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 13,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 14,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 15,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 16,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 17,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 18,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 19,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 20,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 21,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 22,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 23,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 24,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 25,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 26,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 27,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 28,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 29,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 30,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 31,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 32,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 33,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 34,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 35,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 36,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 37,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 38,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 39,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 40,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 41,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 42,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 43,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 44,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 45,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 46,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 47,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 48,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 49,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        },
+        {
+          "corrections": 50,
+          "accuracy": 0.98,
+          "self_heal_rate": 0.03,
+          "rules_graduated": 1,
+          "cost_per_field": 0.0
+        }
+      ]
+    },
+    {
+      "field_name": "governing_law",
+      "corrections_to_90": 6,
+      "corrections_to_95": 11,
+      "corrections_to_rule": null,
+      "curve": [
+        {
+          "corrections": 0,
+          "accuracy": 0.72,
+          "self_heal_rate": 0.42,
+          "rules_graduated": 0,
+          "cost_per_field": 0.0051
+        },
+        {
+          "corrections": 1,
+          "accuracy": 0.7679,
+          "self_heal_rate": 0.3482,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004741
+        },
+        {
+          "corrections": 2,
+          "accuracy": 0.8071,
+          "self_heal_rate": 0.2893,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004446
+        },
+        {
+          "corrections": 3,
+          "accuracy": 0.8393,
+          "self_heal_rate": 0.241,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004205
+        },
+        {
+          "corrections": 4,
+          "accuracy": 0.8657,
+          "self_heal_rate": 0.2014,
+          "rules_graduated": 0,
+          "cost_per_field": 0.004007
+        },
+        {
+          "corrections": 5,
+          "accuracy": 0.8874,
+          "self_heal_rate": 0.1689,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003845
+        },
+        {
+          "corrections": 6,
+          "accuracy": 0.9051,
+          "self_heal_rate": 0.1423,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003711
+        },
+        {
+          "corrections": 7,
+          "accuracy": 0.9197,
+          "self_heal_rate": 0.1205,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003602
+        },
+        {
+          "corrections": 8,
+          "accuracy": 0.9316,
+          "self_heal_rate": 0.1026,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003513
+        },
+        {
+          "corrections": 9,
+          "accuracy": 0.9414,
+          "self_heal_rate": 0.0879,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003439
+        },
+        {
+          "corrections": 10,
+          "accuracy": 0.9494,
+          "self_heal_rate": 0.0758,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003379
+        },
+        {
+          "corrections": 11,
+          "accuracy": 0.956,
+          "self_heal_rate": 0.066,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00333
+        },
+        {
+          "corrections": 12,
+          "accuracy": 0.9614,
+          "self_heal_rate": 0.0579,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003289
+        },
+        {
+          "corrections": 13,
+          "accuracy": 0.9658,
+          "self_heal_rate": 0.0512,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003256
+        },
+        {
+          "corrections": 14,
+          "accuracy": 0.9695,
+          "self_heal_rate": 0.0458,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003229
+        },
+        {
+          "corrections": 15,
+          "accuracy": 0.9724,
+          "self_heal_rate": 0.0413,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003207
+        },
+        {
+          "corrections": 16,
+          "accuracy": 0.9749,
+          "self_heal_rate": 0.0377,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003188
+        },
+        {
+          "corrections": 17,
+          "accuracy": 0.9769,
+          "self_heal_rate": 0.0347,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003173
+        },
+        {
+          "corrections": 18,
+          "accuracy": 0.9785,
+          "self_heal_rate": 0.0322,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003161
+        },
+        {
+          "corrections": 19,
+          "accuracy": 0.9799,
+          "self_heal_rate": 0.0302,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003151
+        },
+        {
+          "corrections": 20,
+          "accuracy": 0.981,
+          "self_heal_rate": 0.0285,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003143
+        },
+        {
+          "corrections": 21,
+          "accuracy": 0.9819,
+          "self_heal_rate": 0.0272,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003136
+        },
+        {
+          "corrections": 22,
+          "accuracy": 0.9826,
+          "self_heal_rate": 0.0261,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00313
+        },
+        {
+          "corrections": 23,
+          "accuracy": 0.9832,
+          "self_heal_rate": 0.0252,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003126
+        },
+        {
+          "corrections": 24,
+          "accuracy": 0.9837,
+          "self_heal_rate": 0.0244,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003122
+        },
+        {
+          "corrections": 25,
+          "accuracy": 0.9841,
+          "self_heal_rate": 0.0238,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003119
+        },
+        {
+          "corrections": 26,
+          "accuracy": 0.9845,
+          "self_heal_rate": 0.0233,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003116
+        },
+        {
+          "corrections": 27,
+          "accuracy": 0.9847,
+          "self_heal_rate": 0.0229,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003114
+        },
+        {
+          "corrections": 28,
+          "accuracy": 0.985,
+          "self_heal_rate": 0.0225,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003113
+        },
+        {
+          "corrections": 29,
+          "accuracy": 0.9852,
+          "self_heal_rate": 0.0223,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003111
+        },
+        {
+          "corrections": 30,
+          "accuracy": 0.9853,
+          "self_heal_rate": 0.022,
+          "rules_graduated": 0,
+          "cost_per_field": 0.00311
+        },
+        {
+          "corrections": 31,
+          "accuracy": 0.9854,
+          "self_heal_rate": 0.0218,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003109
+        },
+        {
+          "corrections": 32,
+          "accuracy": 0.9855,
+          "self_heal_rate": 0.0217,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003108
+        },
+        {
+          "corrections": 33,
+          "accuracy": 0.9856,
+          "self_heal_rate": 0.0216,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003108
+        },
+        {
+          "corrections": 34,
+          "accuracy": 0.9857,
+          "self_heal_rate": 0.0215,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003107
+        },
+        {
+          "corrections": 35,
+          "accuracy": 0.9857,
+          "self_heal_rate": 0.0214,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003107
+        },
+        {
+          "corrections": 36,
+          "accuracy": 0.9858,
+          "self_heal_rate": 0.0213,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003107
+        },
+        {
+          "corrections": 37,
+          "accuracy": 0.9858,
+          "self_heal_rate": 0.0213,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003106
+        },
+        {
+          "corrections": 38,
+          "accuracy": 0.9859,
+          "self_heal_rate": 0.0212,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003106
+        },
+        {
+          "corrections": 39,
+          "accuracy": 0.9859,
+          "self_heal_rate": 0.0212,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003106
+        },
+        {
+          "corrections": 40,
+          "accuracy": 0.9859,
+          "self_heal_rate": 0.0211,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003106
+        },
+        {
+          "corrections": 41,
+          "accuracy": 0.9859,
+          "self_heal_rate": 0.0211,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003106
+        },
+        {
+          "corrections": 42,
+          "accuracy": 0.9859,
+          "self_heal_rate": 0.0211,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 43,
+          "accuracy": 0.9859,
+          "self_heal_rate": 0.0211,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 44,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.0211,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 45,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.0211,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 46,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.021,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 47,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.021,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 48,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.021,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 49,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.021,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        },
+        {
+          "corrections": 50,
+          "accuracy": 0.986,
+          "self_heal_rate": 0.021,
+          "rules_graduated": 0,
+          "cost_per_field": 0.003105
+        }
+      ]
+    }
+  ]
+}

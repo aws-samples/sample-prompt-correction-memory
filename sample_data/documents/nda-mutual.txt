@@ -1,0 +1,43 @@
+MUTUAL NON-DISCLOSURE AGREEMENT
+
+This Mutual Non-Disclosure Agreement ("Agreement") is entered into effective January 10, 2025 by and between:
+
+Initech Ltd., a corporation organized under the laws of England and Wales, with offices at 25 King Street, London EC2V 8AA ("Party A")
+
+and
+
+Contoso Inc., a New York corporation, with offices at 200 Park Avenue, New York, NY 10166 ("Party B")
+
+1. PURPOSE
+
+The Parties wish to explore a potential business relationship regarding enterprise software integration and in connection therewith may disclose confidential information.
+
+2. CONFIDENTIALITY OBLIGATIONS
+
+Each Party agrees to maintain all Confidential Information in strict confidence for a period of five (5) years from disclosure.
+
+3. TERM
+
+This Agreement is effective as of the date first written above and remains in effect for two (2) years, expiring January 9, 2027.
+
+4. RETURN OF MATERIALS
+
+Upon termination, each Party shall return or destroy all Confidential Information.
+
+5. NO PAYMENT
+
+This Agreement involves no financial consideration between the Parties.
+
+6. TERMINATION
+
+Either Party may terminate upon thirty (30) days written notice.
+
+7. GOVERNING LAW
+
+This Agreement shall be governed by the laws of the State of New York.
+
+AGREED:
+
+INITECH LTD.                        CONTOSO INC.
+By: Sarah Thompson, General Counsel By: Michael Rivera, Director
+Date: January 10, 2025              Date: January 10, 2025

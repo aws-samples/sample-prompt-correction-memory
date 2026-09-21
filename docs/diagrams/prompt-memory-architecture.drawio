@@ -1,0 +1,137 @@
+<mxfile host="app.diagrams.net" modified="2026-07-03T00:00:00.000Z" agent="5.0" version="24.0.0" type="device">
+  <diagram id="self-healing-loop" name="Self-Healing Architecture">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="Prompt-Memory Document Extraction — Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Background container -->
+        <mxCell id="bg-container" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#cccccc;strokeWidth=2;dashed=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="1440" height="600" as="geometry" />
+        </mxCell>
+        
+        <!-- Document Upload -->
+        <mxCell id="doc-upload" value="📄&lt;br&gt;&lt;b&gt;Document&lt;/b&gt;&lt;br&gt;Upload to S3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="250" width="140" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- EventBridge -->
+        <mxCell id="eventbridge" value="⚡&lt;br&gt;&lt;b&gt;EventBridge&lt;/b&gt;&lt;br&gt;S3 Event Trigger" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="250" width="140" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Extraction Lambda -->
+        <mxCell id="extraction" value="🤖&lt;br&gt;&lt;b&gt;Extraction&lt;/b&gt;&lt;br&gt;Lambda + Bedrock&lt;br&gt;&lt;i&gt;Claude Haiku 4.5&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="240" width="160" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Confidence Check -->
+        <mxCell id="confidence" value="📊&lt;br&gt;&lt;b&gt;Confidence&lt;/b&gt;&lt;br&gt;&lt;b&gt;Check&lt;/b&gt;&lt;br&gt;score ≥ 0.7?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="225" width="150" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Accept (high confidence) -->
+        <mxCell id="accept-high" value="✅&lt;br&gt;&lt;b&gt;Accept&lt;/b&gt;&lt;br&gt;Store Result" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="130" width="130" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Query Correction Log -->
+        <mxCell id="query-corrections" value="🔍&lt;br&gt;&lt;b&gt;Query Correction&lt;/b&gt;&lt;br&gt;&lt;b&gt;Log&lt;/b&gt;&lt;br&gt;Find past mistakes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="360" width="160" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Correction Log (DynamoDB) -->
+        <mxCell id="correction-log" value="📚&lt;br&gt;&lt;b&gt;Correction Log&lt;/b&gt;&lt;br&gt;DynamoDB&lt;br&gt;&lt;i&gt;field_name + timestamp&lt;/i&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="340" width="160" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Re-extract with few-shot -->
+        <mxCell id="re-extract" value="🔄&lt;br&gt;&lt;b&gt;Re-Extract&lt;/b&gt;&lt;br&gt;w/ Few-Shot Examples&lt;br&gt;&lt;i&gt;Claude Sonnet 4&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="510" width="160" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Accept (healed) -->
+        <mxCell id="accept-healed" value="✅&lt;br&gt;&lt;b&gt;Accept&lt;/b&gt;&lt;br&gt;(Self-Healed)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="540" width="130" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- QA Team -->
+        <mxCell id="qa-team" value="👩‍💼&lt;br&gt;&lt;b&gt;QA Team&lt;/b&gt;&lt;br&gt;Reviews &amp; Corrects" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="130" width="100" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Correction Upload -->
+        <mxCell id="correction-upload" value="📝&lt;br&gt;&lt;b&gt;Correction&lt;/b&gt;&lt;br&gt;JSON to S3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="280" width="130" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows -->
+        <!-- Doc → EventBridge -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#333333;" edge="1" source="doc-upload" target="eventbridge" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- EventBridge → Extraction -->
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#333333;" edge="1" source="eventbridge" target="extraction" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Extraction → Confidence -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#333333;" edge="1" source="extraction" target="confidence" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Confidence → Accept (YES) -->
+        <mxCell id="e4" value="≥ 0.7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82b366;fontStyle=1;fontSize=11;" edge="1" source="confidence" target="accept-high" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Confidence → Query Corrections (NO) -->
+        <mxCell id="e5" value="&lt; 0.7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#b85450;fontStyle=1;fontSize=11;" edge="1" source="confidence" target="query-corrections" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Query → Correction Log -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673a6;" edge="1" source="query-corrections" target="correction-log" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Query → Re-extract -->
+        <mxCell id="e7" value="few-shot examples" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#b85450;fontSize=10;fontStyle=2;" edge="1" source="query-corrections" target="re-extract" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Re-extract → Accept healed -->
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82b366;" edge="1" source="re-extract" target="accept-healed" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- QA → Correction Upload -->
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" source="qa-team" target="correction-upload" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Correction Upload → Correction Log -->
+        <mxCell id="e10" value="ingested" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673a6;fontSize=10;fontStyle=2;" edge="1" source="correction-upload" target="correction-log" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Flywheel annotation -->
+        <mxCell id="flywheel-note" value="🔄 &lt;b&gt;THE FLYWHEEL&lt;/b&gt;&lt;br&gt;More corrections → Better prompts → Fewer retries → Lower cost&lt;br&gt;Eventually: corrections synthesize into rules → zero LLM calls" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="500" width="380" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Cost annotation -->
+        <mxCell id="cost-note" value="💰 &lt;b&gt;COST TRAJECTORY&lt;/b&gt;&lt;br&gt;Month 1: $6.77/1K docs (15% retry rate)&lt;br&gt;Month 6: $4.73/1K docs (2% retry rate)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="600" width="320" height="70" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

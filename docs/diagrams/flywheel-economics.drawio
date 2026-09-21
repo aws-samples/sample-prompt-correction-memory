@@ -1,0 +1,132 @@
+<mxfile host="app.diagrams.net" modified="2026-07-03T00:00:00.000Z" agent="5.0" version="24.0.0" type="device">
+  <diagram id="flywheel" name="Flywheel Economics">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="The Prompt-Memory Flywheel: Better AND Cheaper Over Time" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="800" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Flywheel Circle - using individual nodes arranged in a circle -->
+        
+        <!-- Node 1: QA Correction -->
+        <mxCell id="node1" value="👩‍💼&lt;br&gt;&lt;b&gt;QA Submits&lt;/b&gt;&lt;br&gt;&lt;b&gt;Correction&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="100" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Node 2: Log Grows -->
+        <mxCell id="node2" value="📚&lt;br&gt;&lt;b&gt;Correction Log&lt;/b&gt;&lt;br&gt;&lt;b&gt;Grows&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="220" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Node 3: Better Prompts -->
+        <mxCell id="node3" value="🎯&lt;br&gt;&lt;b&gt;Better Few-Shot&lt;/b&gt;&lt;br&gt;&lt;b&gt;Prompts&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="400" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Node 4: Higher Accuracy -->
+        <mxCell id="node4" value="📈&lt;br&gt;&lt;b&gt;Higher First-Pass&lt;/b&gt;&lt;br&gt;&lt;b&gt;Accuracy&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="520" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Node 5: Fewer Retries -->
+        <mxCell id="node5" value="⬇️&lt;br&gt;&lt;b&gt;Fewer Self-Heal&lt;/b&gt;&lt;br&gt;&lt;b&gt;Retries&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="400" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Node 6: Lower Cost -->
+        <mxCell id="node6" value="💰&lt;br&gt;&lt;b&gt;Lower Cost&lt;/b&gt;&lt;br&gt;&lt;b&gt;Per Document&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="220" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Curved arrows connecting the flywheel -->
+        <mxCell id="fw1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;strokeWidth=3;strokeColor=#6c8ebf;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" edge="1" source="node1" target="node2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fw2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;strokeWidth=3;strokeColor=#9673a6;exitX=0.5;exitY=1;entryX=1;entryY=0.3;" edge="1" source="node2" target="node3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fw3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;strokeWidth=3;strokeColor=#82b366;exitX=0;exitY=1;entryX=1;entryY=0;" edge="1" source="node3" target="node4" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fw4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;strokeWidth=3;strokeColor=#82b366;exitX=0;exitY=0.5;entryX=0.5;entryY=1;" edge="1" source="node4" target="node5" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fw5" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;strokeWidth=3;strokeColor=#d6b656;exitX=0.5;exitY=0;entryX=0;entryY=0.7;" edge="1" source="node5" target="node6" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fw6" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;strokeWidth=3;strokeColor=#d6b656;exitX=1;exitY=0;entryX=0;entryY=0.5;" edge="1" source="node6" target="node1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Center label -->
+        <mxCell id="center-label" value="🔄&lt;br&gt;&lt;b&gt;SELF-HEALING&lt;/b&gt;&lt;br&gt;&lt;b&gt;FLYWHEEL&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#1a1a2e;fontColor=#ffffff;fontSize=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="320" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Timeline at bottom -->
+        <mxCell id="timeline-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#cccccc;" vertex="1" parent="1">
+          <mxGeometry x="100" y="680" width="1000" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="timeline-title" value="&lt;b&gt;Observed Trajectory (5,000 documents)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontColor=#333;" vertex="1" parent="1">
+          <mxGeometry x="350" y="690" width="500" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Week 1 -->
+        <mxCell id="w1" value="&lt;b&gt;Week 1&lt;/b&gt;&lt;br&gt;0 corrections&lt;br&gt;72% accuracy&lt;br&gt;18% retry rate&lt;br&gt;&lt;b&gt;$6.77&lt;/b&gt;/1K docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="130" y="720" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Week 4 -->
+        <mxCell id="w4" value="&lt;b&gt;Week 4&lt;/b&gt;&lt;br&gt;25 corrections&lt;br&gt;84% accuracy&lt;br&gt;9% retry rate&lt;br&gt;&lt;b&gt;$5.80&lt;/b&gt;/1K docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="720" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Week 8 -->
+        <mxCell id="w8" value="&lt;b&gt;Week 8&lt;/b&gt;&lt;br&gt;50 corrections&lt;br&gt;91% accuracy&lt;br&gt;4% retry rate&lt;br&gt;&lt;b&gt;$5.00&lt;/b&gt;/1K docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="720" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Week 12 -->
+        <mxCell id="w12" value="&lt;b&gt;Week 12&lt;/b&gt;&lt;br&gt;50 corrections&lt;br&gt;93% accuracy&lt;br&gt;2% retry rate&lt;br&gt;&lt;b&gt;$4.73&lt;/b&gt;/1K docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="760" y="720" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Week 12+ -->
+        <mxCell id="w12plus" value="&lt;b&gt;Week 16+&lt;/b&gt;&lt;br&gt;Rules generated&lt;br&gt;95%+ accuracy&lt;br&gt;&lt;1% retry rate&lt;br&gt;&lt;b&gt;$2.10&lt;/b&gt;/1K docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#2e7d32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="930" y="720" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Progress arrows -->
+        <mxCell id="prog1" style="strokeWidth=2;strokeColor=#999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="770" as="sourcePoint" />
+            <mxPoint x="335" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="prog2" style="strokeWidth=2;strokeColor=#999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="485" y="770" as="sourcePoint" />
+            <mxPoint x="545" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="prog3" style="strokeWidth=2;strokeColor=#999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="695" y="770" as="sourcePoint" />
+            <mxPoint x="755" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="prog4" style="strokeWidth=2;strokeColor=#999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="905" y="770" as="sourcePoint" />
+            <mxPoint x="925" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

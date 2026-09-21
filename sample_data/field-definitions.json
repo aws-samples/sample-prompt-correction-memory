@@ -1,0 +1,37 @@
+[
+  {
+    "field_name": "effective_date",
+    "description": "Agreement effective date",
+    "prompt": "Extract the effective date when this agreement becomes active. Return in YYYY-MM-DD format. Look in the preamble, recitals, or signature block.",
+    "data_type": "date",
+    "confidence_threshold": 0.7
+  },
+  {
+    "field_name": "party_a",
+    "description": "First named party to the agreement",
+    "prompt": "Extract the full legal entity name of the first party listed in the agreement. Include corporate designation (Inc., LLC, Ltd., Corp., etc.).",
+    "data_type": "str",
+    "confidence_threshold": 0.7
+  },
+  {
+    "field_name": "party_b",
+    "description": "Second named party to the agreement",
+    "prompt": "Extract the full legal entity name of the second party listed in the agreement. Include corporate designation (Inc., LLC, Ltd., Corp., etc.).",
+    "data_type": "str",
+    "confidence_threshold": 0.7
+  },
+  {
+    "field_name": "payment_terms",
+    "description": "Payment terms in days",
+    "prompt": "Extract payment terms as a numeric value representing the number of days. Convert 'Net 30' to 30, 'upon receipt' to 0, 'Net 45' to 45.",
+    "data_type": "float",
+    "confidence_threshold": 0.7
+  },
+  {
+    "field_name": "governing_law",
+    "description": "Governing law jurisdiction",
+    "prompt": "Extract the governing law or jurisdiction clause. Return the state, country, or jurisdiction whose laws govern the agreement.",
+    "data_type": "str",
+    "confidence_threshold": 0.7
+  }
+]

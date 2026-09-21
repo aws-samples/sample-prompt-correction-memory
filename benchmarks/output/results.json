@@ -1,0 +1,887 @@
+[
+  {
+    "name": "zero-shot",
+    "corrections_count": 0,
+    "avg_f1": 0.5333,
+    "avg_precision": 0.5333,
+    "avg_recall": 0.5333,
+    "avg_cost_per_doc": 0.004,
+    "avg_self_heal_rate": 0.0,
+    "duration_seconds": 0.001,
+    "documents": [
+      {
+        "document_id": "service-agreement",
+        "f1": 0.4,
+        "precision": 0.4,
+        "recall": 0.4,
+        "total_cost": 0.004,
+        "self_heal_rate": 0.0,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-03",
+            "expected": "2024-03-01",
+            "correct": false,
+            "confidence": 0.421,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Acme Corporation",
+            "expected": "Acme Corporation",
+            "correct": true,
+            "confidence": 0.658,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "GlobalTech Solutions Inc.",
+            "expected": "GlobalTech Solutions Inc.",
+            "correct": true,
+            "confidence": 0.661,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "thirty",
+            "expected": "30",
+            "correct": false,
+            "confidence": 0.443,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "United States",
+            "expected": "Delaware",
+            "correct": false,
+            "confidence": 0.453,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "lease-agreement",
+        "f1": 0.6,
+        "precision": 0.6,
+        "recall": 0.6,
+        "total_cost": 0.004,
+        "self_heal_rate": 0.0,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-07-15",
+            "expected": "2024-07-15",
+            "correct": true,
+            "confidence": 0.696,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Northwind Properties LLC",
+            "expected": "Northwind Properties LLC",
+            "correct": true,
+            "confidence": 0.614,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Fabrikam LLC",
+            "expected": "Fabrikam LLC",
+            "correct": true,
+            "confidence": 0.591,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "thirty",
+            "expected": "0",
+            "correct": false,
+            "confidence": 0.35,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "United States",
+            "expected": "Texas",
+            "correct": false,
+            "confidence": 0.553,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "nda-mutual",
+        "f1": 0.6,
+        "precision": 0.6,
+        "recall": 0.6,
+        "total_cost": 0.004,
+        "self_heal_rate": 0.0,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2025-01-10",
+            "expected": "2025-01-10",
+            "correct": true,
+            "confidence": 0.665,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Initech",
+            "expected": "Initech Ltd.",
+            "correct": false,
+            "confidence": 0.468,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Contoso Inc.",
+            "expected": "Contoso Inc.",
+            "correct": true,
+            "confidence": 0.631,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "thirty",
+            "expected": "0",
+            "correct": false,
+            "confidence": 0.352,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "New York",
+            "expected": "New York",
+            "correct": true,
+            "confidence": 0.734,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "few-corrections",
+    "corrections_count": 5,
+    "avg_f1": 0.8667,
+    "avg_precision": 0.8667,
+    "avg_recall": 0.8667,
+    "avg_cost_per_doc": 0.0106,
+    "avg_self_heal_rate": 0.6,
+    "duration_seconds": 0.001,
+    "documents": [
+      {
+        "document_id": "service-agreement",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0106,
+        "self_heal_rate": 0.6,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-03-01",
+            "expected": "2024-03-01",
+            "correct": true,
+            "confidence": 0.8,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Acme Corporation",
+            "expected": "Acme Corporation",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "GlobalTech Solutions Inc.",
+            "expected": "GlobalTech Solutions Inc.",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "30",
+            "expected": "30",
+            "correct": true,
+            "confidence": 0.844,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "Delaware",
+            "expected": "Delaware",
+            "correct": true,
+            "confidence": 0.674,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "lease-agreement",
+        "f1": 0.8,
+        "precision": 0.8,
+        "recall": 0.8,
+        "total_cost": 0.0084,
+        "self_heal_rate": 0.4,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-07-15",
+            "expected": "2024-07-15",
+            "correct": true,
+            "confidence": 0.806,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Northwind Properties LLC",
+            "expected": "Northwind Properties LLC",
+            "correct": true,
+            "confidence": 0.75,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Fabrikam LLC",
+            "expected": "Fabrikam LLC",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.881,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "United States",
+            "expected": "Texas",
+            "correct": false,
+            "confidence": 0.45,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "nda-mutual",
+        "f1": 0.8,
+        "precision": 0.8,
+        "recall": 0.8,
+        "total_cost": 0.0128,
+        "self_heal_rate": 0.8,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2025-01-10",
+            "expected": "2025-01-10",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Initech",
+            "expected": "Initech Ltd.",
+            "correct": false,
+            "confidence": 0.75,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Contoso Inc.",
+            "expected": "Contoso Inc.",
+            "correct": true,
+            "confidence": 0.958,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.842,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "New York",
+            "expected": "New York",
+            "correct": true,
+            "confidence": 0.78,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "moderate-corrections",
+    "corrections_count": 10,
+    "avg_f1": 0.9333,
+    "avg_precision": 0.9333,
+    "avg_recall": 0.9333,
+    "avg_cost_per_doc": 0.0106,
+    "avg_self_heal_rate": 0.6,
+    "duration_seconds": 0.0,
+    "documents": [
+      {
+        "document_id": "service-agreement",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0128,
+        "self_heal_rate": 0.8,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-03-01",
+            "expected": "2024-03-01",
+            "correct": true,
+            "confidence": 0.814,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Acme Corporation",
+            "expected": "Acme Corporation",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "GlobalTech Solutions Inc.",
+            "expected": "GlobalTech Solutions Inc.",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "30",
+            "expected": "30",
+            "correct": true,
+            "confidence": 0.853,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "Delaware",
+            "expected": "Delaware",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          }
+        ]
+      },
+      {
+        "document_id": "lease-agreement",
+        "f1": 0.8,
+        "precision": 0.8,
+        "recall": 0.8,
+        "total_cost": 0.0106,
+        "self_heal_rate": 0.6,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-07-15",
+            "expected": "2024-07-15",
+            "correct": true,
+            "confidence": 0.815,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Northwind Properties LLC",
+            "expected": "Northwind Properties LLC",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Fabrikam LLC",
+            "expected": "Fabrikam LLC",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "thirty",
+            "expected": "0",
+            "correct": false,
+            "confidence": 0.52,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "Texas",
+            "expected": "Texas",
+            "correct": true,
+            "confidence": 0.734,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "nda-mutual",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0084,
+        "self_heal_rate": 0.4,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2025-01-10",
+            "expected": "2025-01-10",
+            "correct": true,
+            "confidence": 0.75,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Initech Ltd.",
+            "expected": "Initech Ltd.",
+            "correct": true,
+            "confidence": 0.773,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Contoso Inc.",
+            "expected": "Contoso Inc.",
+            "correct": true,
+            "confidence": 0.97,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.851,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "New York",
+            "expected": "New York",
+            "correct": true,
+            "confidence": 0.794,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "good-coverage",
+    "corrections_count": 25,
+    "avg_f1": 0.9333,
+    "avg_precision": 0.9333,
+    "avg_recall": 0.9333,
+    "avg_cost_per_doc": 0.0084,
+    "avg_self_heal_rate": 0.4,
+    "duration_seconds": 0.001,
+    "documents": [
+      {
+        "document_id": "service-agreement",
+        "f1": 0.8,
+        "precision": 0.8,
+        "recall": 0.8,
+        "total_cost": 0.0084,
+        "self_heal_rate": 0.4,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-03-01",
+            "expected": "2024-03-01",
+            "correct": true,
+            "confidence": 0.855,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Acme Corporation",
+            "expected": "Acme Corporation",
+            "correct": true,
+            "confidence": 0.723,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "GlobalTech Solutions Inc.",
+            "expected": "GlobalTech Solutions Inc.",
+            "correct": true,
+            "confidence": 0.72,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "30",
+            "expected": "30",
+            "correct": true,
+            "confidence": 0.974,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "United States",
+            "expected": "Delaware",
+            "correct": false,
+            "confidence": 0.622,
+            "self_healed": true,
+            "cost": 0.003
+          }
+        ]
+      },
+      {
+        "document_id": "lease-agreement",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0062,
+        "self_heal_rate": 0.2,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-07-15",
+            "expected": "2024-07-15",
+            "correct": true,
+            "confidence": 0.76,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Northwind Properties LLC",
+            "expected": "Northwind Properties LLC",
+            "correct": true,
+            "confidence": 0.806,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Fabrikam LLC",
+            "expected": "Fabrikam LLC",
+            "correct": true,
+            "confidence": 0.746,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.963,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "Texas",
+            "expected": "Texas",
+            "correct": true,
+            "confidence": 0.768,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "nda-mutual",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0106,
+        "self_heal_rate": 0.6,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2025-01-10",
+            "expected": "2025-01-10",
+            "correct": true,
+            "confidence": 0.771,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Initech Ltd.",
+            "expected": "Initech Ltd.",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Contoso Inc.",
+            "expected": "Contoso Inc.",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.868,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "New York",
+            "expected": "New York",
+            "correct": true,
+            "confidence": 0.713,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "mature",
+    "corrections_count": 50,
+    "avg_f1": 0.9333,
+    "avg_precision": 0.9333,
+    "avg_recall": 0.9333,
+    "avg_cost_per_doc": 0.0084,
+    "avg_self_heal_rate": 0.4,
+    "duration_seconds": 0.001,
+    "documents": [
+      {
+        "document_id": "service-agreement",
+        "f1": 0.8,
+        "precision": 0.8,
+        "recall": 0.8,
+        "total_cost": 0.0084,
+        "self_heal_rate": 0.4,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-03-01",
+            "expected": "2024-03-01",
+            "correct": true,
+            "confidence": 0.925,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Acme Corporation",
+            "expected": "Acme Corporation",
+            "correct": true,
+            "confidence": 0.787,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "GlobalTech Solutions Inc.",
+            "expected": "GlobalTech Solutions Inc.",
+            "correct": true,
+            "confidence": 0.779,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "30",
+            "expected": "30",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "United States",
+            "expected": "Delaware",
+            "correct": false,
+            "confidence": 0.622,
+            "self_healed": true,
+            "cost": 0.003
+          }
+        ]
+      },
+      {
+        "document_id": "lease-agreement",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0062,
+        "self_heal_rate": 0.2,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2024-07-15",
+            "expected": "2024-07-15",
+            "correct": true,
+            "confidence": 0.83,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Northwind Properties LLC",
+            "expected": "Northwind Properties LLC",
+            "correct": true,
+            "confidence": 0.871,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Fabrikam LLC",
+            "expected": "Fabrikam LLC",
+            "correct": true,
+            "confidence": 0.805,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "Texas",
+            "expected": "Texas",
+            "correct": true,
+            "confidence": 0.834,
+            "self_healed": false,
+            "cost": 0.0008
+          }
+        ]
+      },
+      {
+        "document_id": "nda-mutual",
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "total_cost": 0.0106,
+        "self_heal_rate": 0.6,
+        "fields": [
+          {
+            "field_name": "effective_date",
+            "extracted": "2025-01-10",
+            "expected": "2025-01-10",
+            "correct": true,
+            "confidence": 0.841,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "party_a",
+            "extracted": "Initech Ltd.",
+            "expected": "Initech Ltd.",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "party_b",
+            "extracted": "Contoso Inc.",
+            "expected": "Contoso Inc.",
+            "correct": true,
+            "confidence": 0.755,
+            "self_healed": false,
+            "cost": 0.0008
+          },
+          {
+            "field_name": "payment_terms",
+            "extracted": "0",
+            "expected": "0",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          },
+          {
+            "field_name": "governing_law",
+            "extracted": "New York",
+            "expected": "New York",
+            "correct": true,
+            "confidence": 0.99,
+            "self_healed": true,
+            "cost": 0.003
+          }
+        ]
+      }
+    ]
+  }
+]

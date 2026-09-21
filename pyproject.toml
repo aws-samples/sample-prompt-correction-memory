@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prompt-memory"
+version = "0.1.0"
+description = "Sample code demonstrating automated prompt self-correction for LLM document extraction on AWS. Each human correction improves future extractions — no retraining, no redeployment."
+readme = "README.md"
+license = {text = "MIT-0"}
+requires-python = ">=3.9"
+dependencies = ["boto3>=1.34"]
+keywords = [
+    "llm",
+    "document-extraction",
+    "prompt-memory",
+    "self-healing",
+    "few-shot-learning",
+    "correction-memory",
+    "bedrock",
+    "prompt-optimization",
+    "intelligent-document-processing",
+    "confidence-routing",
+    "self-correction",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: General",
+]
+
+[[project.authors]]
+name = "avneet-bansal-aws"
+
+[project.urls]
+Homepage = "https://github.com/aws-samples/sample-prompt-correction-memory"
+Repository = "https://github.com/aws-samples/sample-prompt-correction-memory"
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "pytest-cov>=4.0", "hypothesis>=6.0", "moto>=5.0"]
+local = ["spacy>=3.5", "ollama>=0.1"]
+dashboard = ["streamlit>=1.20", "plotly>=5.0"]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

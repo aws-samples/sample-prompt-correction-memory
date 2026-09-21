@@ -1,0 +1,40 @@
+MASTER SERVICE AGREEMENT
+
+This Master Service Agreement ("Agreement") is entered into as of March 1, 2024 ("Effective Date") by and between:
+
+Acme Corporation, a Delaware corporation with principal offices at 100 Innovation Drive, Wilmington, DE 19801 ("Client")
+
+and
+
+GlobalTech Solutions Inc., a California corporation with principal offices at 500 Tech Park Boulevard, San Jose, CA 95110 ("Provider")
+
+WHEREAS, Client desires to engage Provider for technology consulting and software development services; and
+WHEREAS, Provider has the expertise and resources to deliver such services;
+
+NOW, THEREFORE, in consideration of the mutual covenants set forth herein, the parties agree as follows:
+
+1. TERM
+
+This Agreement shall commence on the Effective Date and shall continue for a period of three (3) years, expiring on February 28, 2027, unless earlier terminated.
+
+2. SERVICES AND COMPENSATION
+
+2.1 Provider shall perform services described in Statements of Work attached as exhibits.
+
+2.2 Invoices shall be submitted quarterly in arrears. Payment is due within thirty (30) days of receipt of each invoice (Net 30).
+
+2.3 Total aggregate value shall not exceed Five Hundred Thousand Dollars ($500,000.00).
+
+3. TERMINATION
+
+Either party may terminate upon ninety (90) days prior written notice.
+
+4. GOVERNING LAW
+
+This Agreement shall be governed by the laws of the State of Delaware.
+
+IN WITNESS WHEREOF:
+
+ACME CORPORATION                    GLOBALTECH SOLUTIONS INC.
+By: Jane Mitchell, VP Technology   By: Robert Chen, CEO
+Date: March 1, 2024                Date: March 1, 2024
