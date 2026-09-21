@@ -110,6 +110,17 @@ Resources:
                   - !Sub arn:${AWS::Partition}:s3:::prompt-memory-logs-${AWS::AccountId}-${Environment}
               StringEquals:
                 aws:SourceAccount: !Ref AWS::AccountId
+          # Deny any request that is not sent over TLS/HTTPS.
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !GetAtt AccessLogBucket.Arn
+              - !Sub ${AccessLogBucket.Arn}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: false
 
   # ── S3 Bucket ──
   DocumentBucket:
@@ -133,6 +144,25 @@ Resources:
       NotificationConfiguration:
         EventBridgeConfiguration:
           EventBridgeEnabled: true
+
+  # Enforce TLS/HTTPS for all access to the document bucket.
+  DocumentBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref DocumentBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !GetAtt DocumentBucket.Arn
+              - !Sub ${DocumentBucket.Arn}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: false
 
   # ── DynamoDB Tables ──
   CorrectionLogTable:
