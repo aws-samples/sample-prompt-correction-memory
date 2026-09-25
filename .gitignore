@@ -68,3 +68,5 @@ samconfig.toml
 # Security scan artifacts (attached to PCSR ticket, not shipped in the repo)
 scan-report.json
 *.scan-report.json
+*-review.json
+*-threat-model.json
