@@ -6,6 +6,10 @@
 
 > **Disclaimer:** This is sample code provided for demonstration and educational purposes. It is not intended for production use as-is. Review, test, and harden it for your own security and operational requirements before deploying.
 
+<p align="center">
+  <img src="docs/flywheel.svg" alt="Correction memory flywheel: rules, cloud LLM, and self-healing tiers feeding a growing correction log" width="720">
+</p>
+
 ---
 
 ## The Problem
