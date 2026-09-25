@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock
 
 from src.extraction.extractor import Extractor
-from src.extraction.models import CorrectionRecord, ExtractionResult, FieldDefinition
+from src.extraction.models import CorrectionRecord, FieldDefinition
 from src.prompt_memory.calibration import ConfidenceCalibrator
 from src.prompt_memory.confidence_router import ConfidenceRouter
 from src.prompt_memory.rule_engine import RuleEngine
@@ -288,7 +288,7 @@ class TestEndToEndPromptMemory:
     def test_feedback_handler_processes_eventbridge_event(self):
         """Feedback handler correctly processes EventBridge direct invocation."""
         import json
-        from unittest.mock import MagicMock, patch
+        from unittest.mock import patch
 
         # Simulate EventBridge event format
         event = {

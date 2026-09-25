@@ -52,3 +52,40 @@ include = ["src*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.format]
+# black wraps code at 88 but intentionally leaves long string literals and
+# comments intact; allow a little headroom so those are not flagged.
+max-line-length = 120
+
+[tool.pylint."messages control"]
+# Docstring conventions are enforced by review, not the linter, for this sample.
+# The remaining disables are deliberate design choices for readable reference
+# code: lazy imports of optional deps, broad excepts around best-effort I/O,
+# Lambda handler signatures, and small structural thresholds.
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-locals",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "too-many-instance-attributes",
+    "too-many-return-statements",
+    "too-few-public-methods",
+    "broad-exception-caught",
+    "import-outside-toplevel",
+    "duplicate-code",
+    "unused-argument",
+    "redefined-outer-name",
+    # black governs code line length (88); the only remaining long lines are
+    # unsplittable string literals (LLM prompts, sample JSON), so line-length
+    # is not enforced separately by pylint.
+    "line-too-long",
+]

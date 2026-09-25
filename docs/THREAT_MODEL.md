@@ -1,205 +1,346 @@
-# Threat Model — Prompt-Memory Document Extraction (Sample)
+# Comprehensive Threat Model Report
 
-This threat model documents the security analysis for the `sample-prompt-correction-memory`
-sample code. It follows a STRIDE-based approach aligned with AWS threat modeling
-guidance. Because this is **sample/reference code**, the model focuses on the
-architecture demonstrated by `infrastructure/template.yaml` and the two Lambda
-handlers, and on the guidance adopters need before running it in their own
-accounts.
+**Generated**: 2026-09-21 15:13:55
+**Current Phase**: 9 - Output Generation and Documentation
+**Overall Completion**: 100.0%
 
-> Scope note: This is a demonstration sample, not a production service. It is
-> intended to be deployed by a developer into their own AWS account to explore
-> the prompt-memory pattern. It does not host multi-tenant data or expose a
-> public network interface.
+## Table of Contents
 
----
+1. [Executive Summary](#executive-summary)
+2. [Business Context](#business-context)
+3. [System Architecture](#system-architecture)
+4. [Threat Actors](#threat-actors)
+5. [Trust Boundaries](#trust-boundaries)
+6. [Assets and Flows](#assets-and-flows)
+7. [Threats](#threats)
+8. [Mitigations](#mitigations)
+9. [Assumptions](#assumptions)
+10. [Phase Progress](#phase-progress)
 
-## 1. System Overview
+## Executive Summary
 
-Prompt-Memory extracts structured fields from documents using Amazon Bedrock,
-and improves over time by storing human QA corrections and reusing them as
-few-shot examples. Recurring corrections graduate into deterministic rules.
+Prompt-Memory Document Extraction is an open-source AWS sample that extracts structured fields from documents using Amazon Bedrock LLMs, and self-improves over time by storing human QA corrections and reusing them as few-shot examples. Recurring corrections graduate into deterministic rules that eliminate LLM calls. It is reference/sample code intended for a developer to deploy into their own single-owner AWS account to explore the pattern; it is not a multi-tenant production service and exposes no public network interface. Architecture: S3 (documents + correction files) → EventBridge → SQS → Lambda (extraction) → Bedrock, with a second Lambda ingesting QA corrections into a DynamoDB correction log, and results stored in a second DynamoDB table. KMS CMK encrypts DynamoDB and SQS.
+
+### Key Statistics
+
+- **Total Threats**: 8
+- **Total Mitigations**: 8
+- **Total Assumptions**: 5
+- **System Components**: 11
+- **Assets**: 3
+- **Threat Actors**: 3
+
+## Business Context
+
+**Description**: Prompt-Memory Document Extraction is an open-source AWS sample that extracts structured fields from documents using Amazon Bedrock LLMs, and self-improves over time by storing human QA corrections and reusing them as few-shot examples. Recurring corrections graduate into deterministic rules that eliminate LLM calls. It is reference/sample code intended for a developer to deploy into their own single-owner AWS account to explore the pattern; it is not a multi-tenant production service and exposes no public network interface. Architecture: S3 (documents + correction files) → EventBridge → SQS → Lambda (extraction) → Bedrock, with a second Lambda ingesting QA corrections into a DynamoDB correction log, and results stored in a second DynamoDB table. KMS CMK encrypts DynamoDB and SQS.
+
+### Business Features
+
+- **Industry Sector**: Technology
+- **Data Sensitivity**: Confidential
+- **User Base Size**: Small
+- **Geographic Scope**: Global
+- **Regulatory Requirements**: None
+- **System Criticality**: Low
+- **Financial Impact**: Low
+- **Authentication Requirement**: Federated
+- **Deployment Environment**: Cloud-Public
+- **Integration Complexity**: Moderate
+
+## System Architecture
 
 ### Components
 
-| Component | AWS Resource | Purpose |
-|-----------|--------------|---------|
-| Document/correction store | Amazon S3 (`DocumentBucket`) | Holds uploaded documents (`documents/`) and QA correction files (`corrections/`) |
-| Access logs | Amazon S3 (`AccessLogBucket`) | S3 server access logs |
-| Event routing | Amazon EventBridge | Routes S3 `Object Created` events to the queue / feedback function |
-| Throttling | Amazon SQS (`ExtractionQueue` + `ExtractionDLQ`) | Buffers extraction work; DLQ captures failures |
-| Async failure capture | Amazon SQS (`LambdaDLQ`) | Dead-letter queue for failed async Lambda invocations |
-| Extraction compute | AWS Lambda (`ExtractionFunction`) | Reads documents, calls Bedrock, writes results |
-| Feedback compute | AWS Lambda (`FeedbackFunction`) | Validates and ingests correction files |
-| Correction memory | Amazon DynamoDB (`CorrectionLogTable`) | Field-level correction log |
-| Results store | Amazon DynamoDB (`ExtractionResultsTable`) | Extraction outputs |
-| Inference | Amazon Bedrock | LLM extraction + self-healing retries |
-| Encryption | AWS KMS (`EncryptionKey`) | CMK encrypting DynamoDB tables and SQS queues |
+| ID | Name | Type | Service Provider | Description |
+|---|---|---|---|---|
+| C001 | DocumentBucket | Storage | AWS | Holds uploaded documents (documents/ prefix) and QA correction files (corrections/ prefix). SSE-S3, versioning, public access blocked, EventBridge notifications enabled. Primary untrusted-input entry point. |
+| C002 | AccessLogBucket | Storage | AWS | Stores S3 server access logs for DocumentBucket. SSE-S3, versioning, public access blocked, BucketOwnerEnforced. |
+| C003 | DocumentUploadRule / CorrectionUploadRule | Network | AWS | Routes S3 Object Created events: documents/ prefix to the extraction SQS queue, corrections/ prefix to the feedback Lambda. |
+| C004 | ExtractionQueue | Network | AWS | Buffers/throttles extraction work between EventBridge and the extraction Lambda. KMS-encrypted; redrive to ExtractionDLQ after 3 attempts. |
+| C005 | ExtractionDLQ / LambdaDLQ | Network | AWS | Dead-letter queues: ExtractionDLQ captures poison messages; LambdaDLQ captures failed async Lambda invocations. KMS-encrypted. |
+| C006 | ExtractionFunction | Compute | AWS | Reads documents from S3, calls Bedrock (Converse) for extraction, performs low-confidence self-healing retries with correction few-shot examples, writes results to DynamoDB. Reserved concurrency 5, env vars KMS-encrypted, DLQ configured. |
+| C007 | FeedbackFunction | Compute | AWS | Validates QA correction files (validate_correction) and ingests them into the DynamoDB correction log. Reserved concurrency 5, env vars KMS-encrypted, DLQ configured. |
+| C008 | CorrectionLogTable | Storage | AWS | Field-level correction log (field_name + timestamp). KMS SSE with CMK, point-in-time recovery enabled. Source of few-shot examples and rule graduation. |
+| C009 | ExtractionResultsTable | Storage | AWS | Stores extraction outputs (document_id + field_name). KMS SSE with CMK, point-in-time recovery enabled. |
+| C010 | Amazon Bedrock | Compute | AWS | LLM inference for extraction (Claude Haiku) and self-healing retries (Claude Sonnet). Receives document text and correction reasons in prompts via Converse API with structured tool-use output. |
+| C011 | EncryptionKey | Security | AWS | Customer-managed CMK (rotation enabled) encrypting both DynamoDB tables, all SQS queues, and Lambda environment variables. |
 
-### Data Flow
+### Connections
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │            Developer's AWS Account            │
-                    │                                               │
-  Uploader ──put──► │  S3 DocumentBucket                            │
- (documents/,       │      │  Object Created                        │
-  corrections/)     │      ▼                                        │
-                    │  EventBridge ── documents/ ──► SQS ExtractionQueue
-                    │      │                              │          │
-                    │      └── corrections/ ──► FeedbackFunction     │
-                    │                                  │             │
-                    │                       validate + write         │
-                    │                                  ▼             │
-                    │                       DynamoDB CorrectionLog   │
-                    │                                               │
-                    │  SQS ──► ExtractionFunction                    │
-                    │              │  read doc, read corrections     │
-                    │              │  call Bedrock (Converse)        │
-                    │              ▼                                 │
-                    │        DynamoDB ExtractionResults              │
-                    │              │                                 │
-                    │              ▼  (low confidence)               │
-                    │        Bedrock self-heal retry                 │
-                    └──────────────────────────────────────────────┘
-```
+| ID | Source | Destination | Protocol | Port | Encrypted | Description |
+|---|---|---|---|---|---|---|
+| CN001 | C001 | C003 | HTTPS | N/A | Yes | S3 Object Created events emitted to EventBridge |
+| CN002 | C003 | C004 | HTTPS | N/A | Yes | EventBridge routes documents/ events to ExtractionQueue (SendMessage) |
+| CN003 | C003 | C007 | HTTPS | N/A | Yes | EventBridge invokes FeedbackFunction on corrections/ events |
+| CN004 | C004 | C006 | HTTPS | N/A | Yes | SQS event source mapping triggers ExtractionFunction (MaxConcurrency 5) |
+| CN005 | C006 | C001 | HTTPS | N/A | Yes | ExtractionFunction reads document from S3 (S3ReadPolicy) |
+| CN006 | C006 | C010 | HTTPS | N/A | Yes | ExtractionFunction calls Bedrock InvokeModel with document text (extraction + self-heal) |
+| CN007 | C006 | C008 | HTTPS | N/A | Yes | ExtractionFunction reads correction log for self-healing few-shot examples (DynamoDBReadPolicy) |
+| CN008 | C006 | C009 | HTTPS | N/A | Yes | ExtractionFunction writes extraction results (DynamoDBCrudPolicy) |
+| CN009 | C007 | C001 | HTTPS | N/A | Yes | FeedbackFunction reads correction file from S3 (S3ReadPolicy) |
+| CN010 | C007 | C008 | HTTPS | N/A | Yes | FeedbackFunction writes validated corrections to correction log (DynamoDBCrudPolicy) |
+
+### Data Stores
+
+| ID | Name | Type | Classification | Encrypted at Rest | Description |
+|---|---|---|---|---|---|
+| D001 | Correction Log | NoSQL | Confidential | Yes | DynamoDB CorrectionLogTable — original/corrected values, correction reasons, document excerpts. KMS CMK + PITR. |
+| D002 | Extraction Results | NoSQL | Confidential | Yes | DynamoDB ExtractionResultsTable — extracted field values per document. KMS CMK + PITR. |
+| D003 | Document & Correction Storage | Object Storage | Confidential | Yes | S3 DocumentBucket — uploaded documents (may contain PII/contract terms) and QA correction files. SSE-S3, versioning, public access blocked. |
+
+## Threat Actors
+
+### Unauthorized Uploader
+
+- **Type**: External
+- **Capability Level**: Medium
+- **Motivations**: Disruption, Other
+- **Resources**: Moderate
+- **Relevant**: Yes
+- **Priority**: 8/10
+- **Description**: A principal who gains write access to the S3 DocumentBucket (misconfigured IAM) and uploads malicious documents or poisoned correction files to bias extraction or trigger cost.
+
+### Malicious Document Author
+
+- **Type**: External
+- **Capability Level**: Medium
+- **Motivations**: Disruption, Other
+- **Resources**: Limited
+- **Relevant**: Yes
+- **Priority**: 7/10
+- **Description**: Author of a document processed by the pipeline who embeds adversarial/prompt-injection content in document text to steer LLM extraction output.
+
+### Malicious/Careless Insider
+
+- **Type**: Insider
+- **Capability Level**: Medium
+- **Motivations**: Espionage, Revenge, Accidental
+- **Resources**: Moderate
+- **Relevant**: Yes
+- **Priority**: 5/10
+- **Description**: A developer/operator in the deploying account with access to S3/DynamoDB who could exfiltrate document content or tamper with the correction log.
+
+## Trust Boundaries
+
+### Trust Zones
+
+#### External Uploader Zone
+
+- **Trust Level**: Untrusted
+- **Description**: Whoever can write documents/correction files to the S3 bucket. Supplies attacker-influenceable content.
+
+#### AWS Account Processing Zone
+
+- **Trust Level**: Medium
+- **Description**: In-account service mesh: S3, EventBridge, SQS, Lambda, DynamoDB governed by IAM and resource policies.
+
+#### Bedrock Inference Zone
+
+- **Trust Level**: Medium
+- **Description**: Amazon Bedrock managed LLM service endpoint; document text leaves account data stores to reach it over TLS.
+
+### Trust Boundaries
+
+#### LLM Data-Egress Boundary (Bedrock)
+
+- **Type**: Account
+- **Controls**: TLS in transit, Structured tool-use output constrains model, Typed field values, Confidence gating + human review of low-confidence results
+- **Description**: Boundary where in-account document text leaves for the Bedrock managed service and where prompt-injection risk materializes.
+
+#### Untrusted Input Boundary (S3 Ingress)
+
+- **Type**: Other
+- **Controls**: S3 Public Access Block, BucketOwnerEnforced (ACLs disabled), EventBridge SourceArn/SourceAccount conditions, FeedbackFunction schema validation of corrections
+- **Description**: Boundary where attacker-influenceable documents and correction files enter the account. Content is untrusted.
+
+## Assets and Flows
+
+### Assets
+
+| ID | Name | Type | Classification | Sensitivity | Criticality | Owner |
+|---|---|---|---|---|---|---|
+| A001 | Document Content | Data | Confidential | 4 | 4 | N/A |
+| A002 | Correction Log Data | Data | Confidential | 4 | 5 | N/A |
+| A003 | Extraction Results | Data | Confidential | 3 | 3 | N/A |
+
+### Asset Flows
+
+| ID | Asset | Source | Destination | Protocol | Encrypted | Risk Level |
+|---|---|---|---|---|---|---|
+| F001 | Document Content | C001 | C006 | HTTPS | Yes | 3 |
+| F002 | Document Content | C006 | C010 | HTTPS | Yes | 3 |
+| F003 | Correction Log Data | C001 | C008 | HTTPS | Yes | 4 |
+
+## Threats
+
+### Identified Threats
+
+#### T1: An unauthorized principal with write access to the S3 bucket
+
+**Statement**: A An unauthorized principal with write access to the S3 bucket given misconfigured IAM allowing s3:PutObject to documents/ or corrections/ can uploads documents or correction files that were not sanctioned, which leads to poisoning of the correction memory or triggering of unwanted extraction/cost
+
+- **Prerequisites**: given misconfigured IAM allowing s3:PutObject to documents/ or corrections/
+- **Action**: uploads documents or correction files that were not sanctioned
+- **Impact**: poisoning of the correction memory or triggering of unwanted extraction/cost
+- **Impacted Assets**: A002
+- **Tags**: STRIDE-S
+
+#### T2: A malicious actor submitting crafted correction files
+
+**Statement**: A A malicious actor submitting crafted correction files with the ability to write to the corrections/ prefix can injects biased or false corrections that become few-shot examples or graduate into rules, which leads to systematic incorrect extractions (correction-log poisoning)
+
+- **Prerequisites**: with the ability to write to the corrections/ prefix
+- **Action**: injects biased or false corrections that become few-shot examples or graduate into rules
+- **Impact**: systematic incorrect extractions (correction-log poisoning)
+- **Impacted Assets**: A002
+- **Tags**: STRIDE-T
+
+#### T3: An operator or auditor
+
+**Statement**: A An operator or auditor when the sample does not configure CloudTrail data events can cannot determine who uploaded a document or submitted a correction, which leads to inability to attribute malicious uploads or correction-log poisoning
+
+- **Prerequisites**: when the sample does not configure CloudTrail data events
+- **Action**: cannot determine who uploaded a document or submitted a correction
+- **Impact**: inability to attribute malicious uploads or correction-log poisoning
+- **Tags**: STRIDE-R
+
+#### T4: An attacker with read access to account data stores
+
+**Statement**: A An attacker with read access to account data stores given over-broad IAM or compromised credentials can reads document content or extraction results containing PII/contract terms, which leads to disclosure of sensitive document data
+
+- **Prerequisites**: given over-broad IAM or compromised credentials
+- **Action**: reads document content or extraction results containing PII/contract terms
+- **Impact**: disclosure of sensitive document data
+- **Impacted Assets**: A001, A003
+- **Tags**: STRIDE-I
+
+#### T5: A mass uploader
+
+**Statement**: A A mass uploader with write access to the bucket can floods the pipeline with documents to drive Bedrock and DynamoDB usage, which leads to cost amplification and processing delay (denial of service / wallet)
+
+- **Prerequisites**: with write access to the bucket
+- **Action**: floods the pipeline with documents to drive Bedrock and DynamoDB usage
+- **Impact**: cost amplification and processing delay (denial of service / wallet)
+- **Tags**: STRIDE-D
+
+#### T6: A crafted document or correction reason
+
+**Statement**: A A crafted document or correction reason processed through the LLM prompt (prompt injection) can embeds adversarial instructions attempting to steer extraction output, which leads to incorrect or attacker-controlled field values
+
+- **Prerequisites**: processed through the LLM prompt (prompt injection)
+- **Action**: embeds adversarial instructions attempting to steer extraction output
+- **Impact**: incorrect or attacker-controlled field values
+- **Impacted Assets**: A001, A003
+- **Tags**: STRIDE-T, LLM, PromptInjection
+
+#### T7: A compromised Lambda execution role
+
+**Statement**: A A compromised Lambda execution role given the bedrock:InvokeModel permission scoped to Resource "*" can invokes Bedrock models beyond those intended, which leads to privilege beyond least-privilege intent / unexpected model cost
+
+- **Prerequisites**: given the bedrock:InvokeModel permission scoped to Resource "*"
+- **Action**: invokes Bedrock models beyond those intended
+- **Impact**: privilege beyond least-privilege intent / unexpected model cost
+- **Tags**: STRIDE-E, IAM
+
+#### T8: A poison message that always fails processing
+
+**Statement**: A A poison message that always fails processing entering the extraction queue can is repeatedly reprocessed by the extraction Lambda, which leads to wasted compute and potential processing stall
+
+- **Prerequisites**: entering the extraction queue
+- **Action**: is repeatedly reprocessed by the extraction Lambda
+- **Impact**: wasted compute and potential processing stall
+- **Tags**: STRIDE-D
+
+## Mitigations
+
+### Resolved Mitigations
+
+#### M1: S3 Public Access Block + BucketOwnerEnforced (ACLs disabled) on DocumentBucket; adopters restrict s3:PutObject to a known role/identity.
+
+**Addresses Threats**: T1
+
+#### M2: FeedbackFunction schema-validates every correction (validate_correction) before writing; adopters gate who can submit corrections and treat them as privileged input. DynamoDB PITR enables rollback.
+
+**Addresses Threats**: T1, T2
+
+#### M3: Structured tool-use output + typed per-field values constrain the model; confidence gating surfaces low-confidence results (confidence_score, self_healed) for human review; adopters add output allow-lists for high-stakes fields.
+
+**Addresses Threats**: T6
+
+#### M4: SQS decoupling + Lambda ReservedConcurrentExecutions=5 and event-source MaximumConcurrency=5 cap parallel Bedrock calls; adopters add AWS Budgets alarms and S3 request limits.
+
+**Addresses Threats**: T5
+
+#### M5: ExtractionDLQ (maxReceiveCount 3) and LambdaDLQ capture poison messages and failed async invocations.
+
+**Addresses Threats**: T8
+
+#### M6: Encryption everywhere: S3 SSE + KMS CMK (rotation) on both DynamoDB tables and all SQS queues; least-privilege SAM policy templates; KMS access limited to the stack CMK ARN. Adopters confirm Bedrock data-classification fit.
+
+**Addresses Threats**: T4
+
+### Identified Mitigations
+
+#### M7: S3 server access logging to AccessLogBucket. Adopter guidance: enable CloudTrail data events for S3/DynamoDB and set Lambda log retention per compliance needs (not configured by the sample).
+
+**Addresses Threats**: T3
+
+#### M8: Adopter guidance: scope bedrock:InvokeModel from Resource "*" to the specific model ARNs enabled in the account.
+
+**Addresses Threats**: T7
+
+## Assumptions
+
+### A001: Deployment
+
+**Description**: The stack is deployed into a single owner's AWS account; there is no multi-tenant isolation requirement in the sample.
+
+- **Impact**: Removes multi-tenant data isolation threats from scope.
+- **Rationale**: This is demonstration/reference code intended for a developer to deploy into their own account.
+
+### A002: Authentication
+
+**Description**: Only trusted principals are granted write access to the S3 DocumentBucket. The sample blocks all public access but does not itself authenticate uploaders.
+
+- **Impact**: Correction-log poisoning and unauthorized extraction depend on the adopter restricting bucket writes.
+- **Rationale**: S3 PublicAccessBlock and BucketOwnerEnforced are set, but IAM scoping of uploaders is the adopter's responsibility.
+
+### A003: AWS Services
+
+**Description**: Amazon Bedrock model access is enabled and the deployer accepts sending document text to Bedrock for inference.
+
+- **Impact**: Document content leaves the account's data stores to reach the Bedrock service endpoint.
+- **Rationale**: Extraction and self-healing both require Bedrock InvokeModel; data classification fit is the adopter's decision.
+
+### A004: Network
+
+**Description**: Lambda functions run outside a VPC by design; they only reach regional AWS service endpoints (Bedrock, DynamoDB, S3, SQS).
+
+- **Impact**: No VPC network isolation; documented checkov skip CKV_AWS_117. Adopters should add VPC as appropriate.
+- **Rationale**: Forcing VPC networking adds undue complexity for a demonstration sample that only calls AWS APIs.
+
+### A005: Residual Risk
+
+**Description**: Residual risks accepted for the sample, with owner actions before production: (RR-1) scope bedrock:InvokeModel to specific model ARNs; (RR-2) confirm document-to-Bedrock data-classification fit; (RR-3) add CloudTrail + budget alarms; (RR-4) gate who can submit corrections (validation is structural only); (RR-5) restrict bucket write access (uploader not authenticated by sample); (RR-6) add output validation + human review for prompt-injection on sensitive fields.
+
+- **Impact**: Residual risk is acceptable for a sample but must be addressed by adopters before production use.
+- **Rationale**: This is demonstration/reference code deployed into a single owner's account; several production hardening steps are intentionally left to the adopter and documented as guidance.
+
+## Phase Progress
+
+| Phase | Name | Completion |
+|---|---|---|
+| 1 | Business Context Analysis | 100% ✅ |
+| 2 | Architecture Analysis | 100% ✅ |
+| 3 | Threat Actor Analysis | 100% ✅ |
+| 4 | Trust Boundary Analysis | 100% ✅ |
+| 5 | Asset Flow Analysis | 100% ✅ |
+| 6 | Threat Identification | 100% ✅ |
+| 7 | Mitigation Planning | 100% ✅ |
+| 7.5 | Code Validation Analysis | 100% ✅ |
+| 8 | Residual Risk Analysis | 100% ✅ |
+| 9 | Output Generation and Documentation | 100% ✅ |
 
 ---
 
-## 2. Trust Boundaries
-
-- **TB1 — External uploader → S3.** Whoever can write to `DocumentBucket`
-  supplies both document content and correction files. This is the primary
-  untrusted-input boundary.
-- **TB2 — Document/correction content → Lambda → Bedrock.** Document text and
-  correction reasons are attacker-influenceable data that flow into LLM prompts.
-- **TB3 — AWS service-to-service.** EventBridge → SQS → Lambda → DynamoDB /
-  Bedrock, governed by IAM and resource policies within the account.
-- **TB4 — KMS.** Encryption/decryption of data at rest for DynamoDB and SQS.
-
----
-
-## 3. Assumptions
-
-1. The stack is deployed into a single owner's AWS account; there is no
-   multi-tenant isolation requirement in the sample.
-2. Only trusted principals are granted write access to `DocumentBucket`.
-   The sample blocks all public access but does not itself authenticate
-   uploaders.
-3. Bedrock model access is enabled and the deployer accepts model provider terms.
-4. Adopters review IAM scoping before any production use.
-
----
-
-## 4. Threats and Mitigations (STRIDE)
-
-### Spoofing
-- **T-S1: Unauthorized upload of documents/corrections.**
-  A spoofed or unauthorized principal writes to the bucket and thereby poisons
-  the correction memory or triggers extraction.
-  - *Mitigations:* S3 `PublicAccessBlockConfiguration` blocks all public access;
-    `BucketOwnerEnforced` ownership disables ACLs. EventBridge/Lambda invocation
-    is restricted via resource policies and `SourceArn`/`SourceAccount`
-    conditions.
-  - *Adopter guidance:* Restrict `s3:PutObject` on `DocumentBucket` to a known
-    role/identity; consider a separate upload approval path for corrections.
-
-### Tampering
-- **T-T1: Correction-log poisoning.** Malicious correction files bias future
-  extractions (few-shot examples) or force incorrect rule graduation.
-  - *Mitigations:* `FeedbackFunction` validates every correction via
-    `validate_correction` before writing. DynamoDB tables are KMS-encrypted and
-    have point-in-time recovery enabled for rollback.
-  - *Residual risk:* Validation is schema/shape level, not semantic. Adopters
-    should treat corrections as privileged input and gate who can submit them.
-- **T-T2: Data-at-rest tampering.** Direct modification of stored data.
-  - *Mitigations:* KMS CMK (`SSEType: KMS`) on both DynamoDB tables and all SQS
-    queues; S3 versioning enabled on document and log buckets.
-
-### Repudiation
-- **T-R1: No record of who uploaded or corrected.**
-  - *Mitigations:* S3 server access logging enabled to `AccessLogBucket`.
-  - *Adopter guidance:* Enable CloudTrail (data events for S3/DynamoDB) and
-    Lambda logging retention per your compliance needs. The sample does not
-    configure CloudTrail.
-
-### Information Disclosure
-- **T-I1: Sensitive document content exposure.** Documents may contain PII or
-  contract terms.
-  - *Mitigations:* All buckets block public access and are encrypted (SSE);
-    DynamoDB and SQS encrypted with a customer-managed KMS key with rotation
-    enabled; least-privilege IAM (`S3ReadPolicy`, scoped `DynamoDB*Policy`,
-    `kms:Decrypt`/`GenerateDataKey` limited to the stack CMK).
-  - *Residual risk:* Document text is sent to Amazon Bedrock for inference.
-    Adopters must confirm this is acceptable for their data classification and
-    choose an appropriate Bedrock region/model.
-- **T-I2: Log leakage.** Access logs or Lambda logs containing identifiers.
-  - *Mitigations:* Handlers log document IDs (SHA-256 prefix) and S3 keys, not
-    document contents. Access log bucket is private and encrypted.
-
-### Denial of Service
-- **T-D1: Upload flood / cost amplification.** Mass uploads drive Bedrock and
-  DynamoDB usage and cost.
-  - *Mitigations:* SQS decouples ingestion from processing; Lambda event source
-    `MaximumConcurrency: 5` and `ReservedConcurrentExecutions: 5` cap parallel
-    Bedrock calls; SQS redrive to DLQ after 3 attempts.
-  - *Adopter guidance:* Add S3 request limits / budget alarms; the sample does
-    not set AWS Budgets.
-- **T-D2: Poison-message loops.** A record that always fails reprocesses.
-  - *Mitigations:* `ExtractionDLQ` (maxReceiveCount 3) and `LambdaDLQ` for async
-    invocation failures.
-
-### Elevation of Privilege
-- **T-E1: Over-broad IAM.** Functions gaining more access than needed.
-  - *Mitigations:* SAM policy templates scope DynamoDB/S3 access to named
-    resources; KMS access limited to the stack CMK ARN; EventBridge granted only
-    `kms:Decrypt`/`GenerateDataKey` for the encrypted queue.
-  - *Residual risk:* `bedrock:InvokeModel` uses `Resource: "*"` because model
-    ARNs vary by region/model. Adopters should scope this to the specific model
-    ARNs they enable.
-
----
-
-## 5. Prompt-Injection Considerations (LLM-specific)
-
-Because document text and correction reasons flow into LLM prompts (TB2),
-adversarial content could attempt to steer extraction output.
-
-- The system uses **structured tool-use output** and per-field prompts, which
-  constrains the model to a defined schema rather than free-form responses.
-- Extracted values are **typed** (`data_type` on each field) and written to
-  DynamoDB as data, not executed.
-- **Residual risk:** A crafted document could still influence a field value.
-  Adopters handling untrusted documents should add output validation/allow-lists
-  for high-stakes fields and human review for low-confidence results (the sample
-  already surfaces `confidence_score` and `self_healed`).
-
----
-
-## 6. Residual Risks Summary
-
-| ID | Residual Risk | Owner Action Before Production |
-|----|---------------|--------------------------------|
-| RR-1 | `bedrock:InvokeModel` scoped to `*` | Scope to specific model ARNs |
-| RR-2 | Document content sent to Bedrock | Confirm data-classification fit |
-| RR-3 | No CloudTrail / budget alarms in sample | Add per environment |
-| RR-4 | Correction validation is structural only | Gate who can submit corrections |
-| RR-5 | Uploader identity not authenticated by sample | Restrict bucket write access |
-| RR-6 | Prompt injection via document content | Add output validation + human review for sensitive fields |
-
----
-
-## 7. Security Controls Already Implemented
-
-- KMS customer-managed key (rotation enabled) for DynamoDB + SQS encryption
-- S3: public access fully blocked, SSE enabled, versioning + access logging
-- DynamoDB: KMS SSE + point-in-time recovery on both tables
-- SQS: KMS encryption on all queues; dead-letter queues for extraction and async
-  Lambda failures
-- Lambda: environment variables encrypted with the CMK, reserved concurrency,
-  DLQ configured
-- Least-privilege IAM via SAM policy templates; KMS access limited to stack CMK
-- Structured/typed LLM output to constrain model responses
-
-_Validated with `checkov` (0 failed / intentional skips documented) and
-`sam validate --lint`._
+*This threat model report was generated automatically by the Threat Modeling MCP Server.*

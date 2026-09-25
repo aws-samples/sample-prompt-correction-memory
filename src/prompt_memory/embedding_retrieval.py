@@ -15,7 +15,7 @@ import json
 import logging
 import math
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 from src.extraction.models import CorrectionRecord
 from src.prompt_memory.semantic_retrieval import SemanticRetriever
@@ -87,7 +87,7 @@ class EmbeddingRetriever:
                     "Using Bedrock embeddings backend: %s", self._bedrock_model_id
                 )
                 return
-            elif self._backend == "bedrock":
+            if self._backend == "bedrock":
                 raise ValueError("Bedrock backend requested but no client provided")
 
         # Fall back to TF-IDF
@@ -190,7 +190,7 @@ class EmbeddingRetriever:
         if self._backend == "sentence-transformers" and self._encoder:
             embedding = self._encoder.encode(text, show_progress_bar=False)
             return embedding.tolist()
-        elif self._backend == "bedrock":
+        if self._backend == "bedrock":
             return self._bedrock_embed(text)
         return []
 
@@ -199,7 +199,7 @@ class EmbeddingRetriever:
         if self._backend == "sentence-transformers" and self._encoder:
             embeddings = self._encoder.encode(texts, show_progress_bar=False)
             return [emb.tolist() for emb in embeddings]
-        elif self._backend == "bedrock":
+        if self._backend == "bedrock":
             return [self._bedrock_embed(t) for t in texts]
         return []
 
@@ -256,7 +256,7 @@ class EmbeddingRetriever:
             "embeddings": self._embeddings,
             "correction_count": len(self._corrections),
         }
-        with open(cache_file, "w") as f:
+        with open(cache_file, "w", encoding="utf-8") as f:
             json.dump(data, f)
 
     @property

@@ -360,10 +360,12 @@ pytest tests/ -v
 
 ## Contributors
 
-- **Avneet Bansal** - [avnban@amazon.com](mailto:avnban@amazon.com)
-- **Muskan** — [immuskan@amazon.com](mailto:immuskan@amazon.com)
-- **Yashika Baranwal** — [ybarnwal@amazon.com](mailto:ybarnwal@amazon.com)
-- **Nishtha Yadav** - [yanishth@amazon.com](mailto:yanishth@amazon.com)
+- Avneet Bansal
+- Muskan
+- Yashika Baranwal
+- Nishtha Yadav
+
+For questions or contributions, please open an issue on this repository.
 
 
 ## License

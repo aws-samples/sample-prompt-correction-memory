@@ -11,10 +11,10 @@ import json
 import logging
 import re
 from collections import defaultdict
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from dataclasses import fields as dataclass_fields
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from src.extraction.models import CorrectionRecord, ExtractionResult, FieldDefinition
 
@@ -41,9 +41,9 @@ class GraduatedRule:
         """
         if self.rule_type == "regex":
             return self._apply_regex(document_text)
-        elif self.rule_type == "lookup":
+        if self.rule_type == "lookup":
             return self._apply_lookup(document_text)
-        elif self.rule_type == "transformation":
+        if self.rule_type == "transformation":
             return self._apply_transformation(document_text)
         return None
 
@@ -109,7 +109,7 @@ class RuleEngine:
         rules_file = self._store_path / "graduated_rules.json"
         if rules_file.exists():
             try:
-                with open(rules_file) as f:
+                with open(rules_file, encoding="utf-8") as f:
                     data = json.load(f)
                 for rule_data in data:
                     rule = GraduatedRule.from_dict(rule_data)
@@ -125,7 +125,7 @@ class RuleEngine:
             for rule in rule_list:
                 all_rules.append(rule.to_dict())
         rules_file = self._store_path / "graduated_rules.json"
-        with open(rules_file, "w") as f:
+        with open(rules_file, "w", encoding="utf-8") as f:
             json.dump(all_rules, f, indent=2)
 
     @staticmethod
@@ -334,7 +334,7 @@ class RuleEngine:
             (r"(\d+)\s*days?\s*(?:of|from|after)", "N days of/from/after"),
         ]
 
-        for pattern, desc in patterns_to_try:
+        for pattern, _desc in patterns_to_try:
             matches_all = True
             for c in corrections:
                 match = re.search(pattern, c.document_excerpt, re.IGNORECASE)
@@ -374,7 +374,7 @@ class RuleEngine:
             (r"(?:the\s+)", ""),
         ]
 
-        for prefix_pattern, replacement in prefixes_to_try:
+        for prefix_pattern, _replacement in prefixes_to_try:
             matches_all = True
             for c in corrections:
                 # Check: does original have the prefix and corrected doesn't?
