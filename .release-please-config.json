@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "python",
+  "packages": {
+    ".": {
+      "package-name": "prompt-memory",
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "python",
+          "path": "src/__init__.py"
+        }
+      ]
+    }
+  }
+}
