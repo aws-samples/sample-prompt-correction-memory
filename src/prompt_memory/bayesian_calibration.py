@@ -174,7 +174,7 @@ class BayesianCalibrator:
         if not state_file.exists():
             return
         try:
-            with open(state_file) as f:
+            with open(state_file, encoding="utf-8") as f:
                 data = json.load(f)
             for item in data:
                 bins = [BinState(**b) for b in item.get("bins", [])]
@@ -205,7 +205,7 @@ class BayesianCalibrator:
                     "bins": [asdict(b) for b in fc.bins],
                 }
             )
-        with open(state_file, "w") as f:
+        with open(state_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
 
     def _get_or_create_field(

@@ -104,7 +104,7 @@ def _load_field_definitions() -> List[FieldDefinition]:
         "FIELD_DEFINITIONS_PATH", "sample_data/field-definitions.json"
     )
     try:
-        with open(defs_path) as f:
+        with open(defs_path, encoding="utf-8") as f:
             data = json.load(f)
         return [FieldDefinition.from_dict(d) for d in data]
     except FileNotFoundError:

@@ -110,7 +110,7 @@ Resources:
                   - !Sub arn:${AWS::Partition}:s3:::prompt-memory-logs-${AWS::AccountId}-${Environment}
               StringEquals:
                 aws:SourceAccount: !Ref AWS::AccountId
-          # Deny any request that is not sent over TLS/HTTPS.
+          # Enforce TLS: deny any request made over an insecure transport.
           - Sid: DenyInsecureTransport
             Effect: Deny
             Principal: "*"
@@ -145,7 +145,7 @@ Resources:
         EventBridgeConfiguration:
           EventBridgeEnabled: true
 
-  # Enforce TLS/HTTPS for all access to the document bucket.
+  # Enforce TLS on the document bucket: deny any non-HTTPS request.
   DocumentBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -255,10 +255,25 @@ Resources:
         - SQSSendMessagePolicy:
             QueueName: !GetAtt LambdaDLQ.QueueName
         - Statement:
+            # Bedrock invocation is scoped to the specific extraction and
+            # self-healing models this sample uses, plus their cross-region
+            # inference profiles, rather than all Bedrock resources.
+            #
+            # ADOPTER GUIDANCE (see THREAT_MODEL.md, RR-1): Before production
+            # use, restrict the foundation-model ARNs below to only the exact
+            # model IDs you enable (e.g. .../foundation-model/${ExtractionModel}
+            # and .../foundation-model/${SelfHealingModel}) and pin the region
+            # in place of the '*' wildcard. Do NOT widen this back to
+            # 'Resource: "*"', which would grant invocation of every Bedrock
+            # model in the account.
             - Effect: Allow
               Action:
                 - bedrock:InvokeModel
-              Resource: "*"
+              Resource:
+                - !Sub arn:${AWS::Partition}:bedrock:*::foundation-model/${ExtractionModel}
+                - !Sub arn:${AWS::Partition}:bedrock:*::foundation-model/${SelfHealingModel}
+                - !Sub arn:${AWS::Partition}:bedrock:*:${AWS::AccountId}:inference-profile/${ExtractionModel}
+                - !Sub arn:${AWS::Partition}:bedrock:*:${AWS::AccountId}:inference-profile/${SelfHealingModel}
             - Effect: Allow
               Action:
                 - kms:Decrypt

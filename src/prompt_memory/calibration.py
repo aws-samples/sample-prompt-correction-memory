@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import json
 import logging
-from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -118,7 +117,7 @@ class ConfidenceCalibrator:
         state_file = self._store_path / "calibration_state.json"
         if state_file.exists():
             try:
-                with open(state_file) as f:
+                with open(state_file, encoding="utf-8") as f:
                     data = json.load(f)
                 for item in data:
                     state = CalibrationState.from_dict(item)
@@ -130,7 +129,7 @@ class ConfidenceCalibrator:
         """Persist calibration state to disk."""
         state_file = self._store_path / "calibration_state.json"
         data = [state.to_dict() for state in self._states.values()]
-        with open(state_file, "w") as f:
+        with open(state_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
 
     def get_threshold(self, field_name: str, default: float = 0.7) -> float:
