@@ -54,13 +54,38 @@ GitHub provides additional document on [forking a repository](https://help.githu
 
 ### Commit Messages
 
-Use conventional commits:
+This project uses [Conventional Commits](https://www.conventionalcommits.org/).
+Commit message prefixes drive automated versioning and changelog generation
+(see [Releases](#releases) below), so please use them:
 
-- `feat:` new feature
-- `fix:` bug fix
+- `feat:` new feature (triggers a **minor** version bump)
+- `fix:` bug fix (triggers a **patch** version bump)
 - `docs:` documentation
 - `test:` adding tests
 - `refactor:` code restructuring
+- `chore:` / `ci:` / `build:` maintenance
+
+A breaking change is indicated by `feat!:` / `fix!:` or a `BREAKING CHANGE:`
+footer, which triggers a **major** version bump.
+
+## Releases
+
+Versioning and releases are automated with
+[release-please](https://github.com/googleapis/release-please) and follow
+[Semantic Versioning](https://semver.org/). Contributors do **not** edit
+version numbers by hand.
+
+How it works:
+
+1. PRs are merged to `main` with Conventional Commit messages.
+2. release-please maintains an open "release PR" that accumulates the pending
+   changes, bumps the version in `pyproject.toml` and `src/__init__.py`, and
+   updates `CHANGELOG.md`.
+3. When a maintainer merges that release PR, release-please tags the release
+   (e.g. `v0.2.0`) and publishes a GitHub Release with generated notes.
+
+The version bump size (major/minor/patch) is determined automatically from the
+Conventional Commit types since the last release.
 
 ## Finding contributions to work on
 
