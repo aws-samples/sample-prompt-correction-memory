@@ -1,0 +1,40 @@
+{
+  "documents": [
+    {
+      "document_id": "service-agreement",
+      "file": "sample_data/documents/service-agreement.txt",
+      "document_type": "service-agreement",
+      "fields": {
+        "effective_date": "2024-03-01",
+        "party_a": "Acme Corporation",
+        "party_b": "GlobalTech Solutions Inc.",
+        "payment_terms": "30",
+        "governing_law": "Delaware"
+      }
+    },
+    {
+      "document_id": "lease-agreement",
+      "file": "sample_data/documents/lease-agreement.txt",
+      "document_type": "lease-agreement",
+      "fields": {
+        "effective_date": "2024-07-15",
+        "party_a": "Northwind Properties LLC",
+        "party_b": "Fabrikam LLC",
+        "payment_terms": "0",
+        "governing_law": "Texas"
+      }
+    },
+    {
+      "document_id": "nda-mutual",
+      "file": "sample_data/documents/nda-mutual.txt",
+      "document_type": "nda",
+      "fields": {
+        "effective_date": "2025-01-10",
+        "party_a": "Initech Ltd.",
+        "party_b": "Contoso Inc.",
+        "payment_terms": "0",
+        "governing_law": "New York"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "field_name": "payment_terms",
+  "document_type": "MSA",
+  "original_value": "quarterly",
+  "corrected_value": "30",
+  "correction_reason": "'Quarterly billing' or 'quarterly invoicing' refers to the billing FREQUENCY, not the payment terms. Payment terms specify how many days after receiving an invoice the payment is due. Look for phrases like 'Net 30', 'due within X days', or 'payable within X days of receipt'.",
+  "document_excerpt": "Invoices shall be submitted quarterly in arrears. Payment is due within thirty (30) days of receipt of each invoice."
+}

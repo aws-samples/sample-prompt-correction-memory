@@ -1,0 +1,8 @@
+{
+  "field_name": "effective_date",
+  "document_type": "MSA",
+  "original_value": "January 15, 2020",
+  "corrected_value": "2024-03-01",
+  "correction_reason": "Return the effective date in ISO 8601 (YYYY-MM-DD) format, and use the date the agreement itself becomes effective (its stated Effective Date), not an unrelated date mentioned elsewhere in the document.",
+  "document_excerpt": "This Master Service Agreement is entered into as of March 1, 2024 (\"Effective Date\") by and between the parties."
+}

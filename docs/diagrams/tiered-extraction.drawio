@@ -1,0 +1,133 @@
+<mxfile host="app.diagrams.net" modified="2026-07-06T00:00:00.000Z" agent="5.0" version="24.0.0" type="device">
+  <diagram id="tiered-pipeline" name="Tiered Extraction Pipeline">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Tiered Extraction Pipeline — Reducing LLM Dependency Over Time" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Document Input -->
+        <mxCell id="doc-input" value="📄&lt;br&gt;&lt;b&gt;Incoming Document&lt;/b&gt;&lt;br&gt;(Contract, NDA, Lease)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;shadow=1;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="80" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Tier 1: Graduated Rules -->
+        <mxCell id="tier1-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4caf50;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="100" y="210" width="1200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tier1-label" value="&lt;b&gt;TIER 1: Graduated Rules (Deterministic)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#2e7d32;" vertex="1" parent="1">
+          <mxGeometry x="120" y="215" width="400" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="tier1-desc" value="✓ Regex patterns synthesized from recurring corrections (rule_engine.py)&lt;br&gt;✓ Lookup tables for normalization (&quot;State of Delaware&quot; → &quot;Delaware&quot;)&lt;br&gt;✓ Transformation rules (&quot;Net 30&quot; → 30, date text → ISO 8601)&lt;br&gt;✓ Auto-generated via meta-rule learner when simple synthesis fails" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="700" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tier1-stats" value="&lt;b&gt;At maturity: handles&lt;br&gt;majority of fields&lt;/b&gt;&lt;br&gt;Cost: $0.00&lt;br&gt;Latency: &lt;1ms&lt;br&gt;Accuracy: 98%+" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4caf50;fontSize=11;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="225" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="tier1-note" value="Starts empty. Grows as corrections accumulate and patterns graduate." style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666;" vertex="1" parent="1">
+          <mxGeometry x="120" y="315" width="500" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Tier 2: Cloud LLM -->
+        <mxCell id="tier2-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f57c00;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="100" y="380" width="1200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tier2-label" value="&lt;b&gt;TIER 2: Cloud LLM Extraction (Standard)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#e65100;" vertex="1" parent="1">
+          <mxGeometry x="120" y="385" width="400" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="tier2-desc" value="✓ Amazon Bedrock — Claude Haiku 4.5 (extractor.py)&lt;br&gt;✓ Structured output via tool use / forced JSON schema (schema_builder.py)&lt;br&gt;✓ Confidence score returned with every extraction&lt;br&gt;✓ Confidence calibration auto-adjusts per-field thresholds (calibration.py)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="120" y="410" width="700" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tier2-stats" value="&lt;b&gt;Handles fields with&lt;br&gt;no rule match&lt;/b&gt;&lt;br&gt;Cost: ~$0.003/field&lt;br&gt;Latency: 1-3s&lt;br&gt;Accuracy: 70-90%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#f57c00;fontSize=11;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="395" width="160" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Tier 3: Self-Healing -->
+        <mxCell id="tier3-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c62828;strokeWidth=2;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="100" y="550" width="1200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="tier3-label" value="&lt;b&gt;TIER 3: Self-Healing (Few-Shot from Correction Memory)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#b71c1c;" vertex="1" parent="1">
+          <mxGeometry x="120" y="555" width="500" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="tier3-desc" value="✓ Triggered when Tier 2 confidence &lt; calibrated threshold (confidence_router.py)&lt;br&gt;✓ Semantic retrieval of relevant past corrections (semantic_retrieval.py)&lt;br&gt;✓ Corrections formatted as few-shot examples in enhanced prompt (retry_with_examples.py)&lt;br&gt;✓ Re-extraction with stronger model: Claude Sonnet 4.5&lt;br&gt;✓ Recurring patterns auto-graduate to Tier 1 rules (rule_engine.py)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="120" y="580" width="700" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tier3-stats" value="&lt;b&gt;Only when confidence&lt;br&gt;is below threshold&lt;/b&gt;&lt;br&gt;Cost: ~$0.015/field&lt;br&gt;Latency: 3-8s&lt;br&gt;Accuracy: 88-96%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8bbd0;strokeColor=#c62828;fontSize=11;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="565" width="160" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows: Document → Tier 1 -->
+        <mxCell id="arrow-doc-tier1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#333;" edge="1" source="doc-input" target="tier1-box" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Escalation arrows -->
+        <mxCell id="esc-1-2" value="No rule match" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#999;fontSize=10;fontStyle=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="660" y="340" as="sourcePoint" />
+            <mxPoint x="660" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="esc-2-3" value="Confidence &lt; threshold" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#999;fontSize=10;fontStyle=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="660" y="510" as="sourcePoint" />
+            <mxPoint x="660" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Accept arrows on the right -->
+        <mxCell id="accept1" value="✅ Accept" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;fontStyle=1;fontColor=#2e7d32;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="260" width="80" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="accept2" value="✅ Accept" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;fontStyle=1;fontColor=#2e7d32;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="430" width="80" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="accept3" value="✅ Accept" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;fontStyle=1;fontColor=#2e7d32;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="600" width="80" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Graduation arrow (Tier 3 → Tier 1) -->
+        <mxCell id="graduation" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=3;strokeColor=#4caf50;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="620" as="sourcePoint" />
+            <mxPoint x="100" y="275" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="60" y="620" />
+              <mxPoint x="60" y="275" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="graduation-label" value="🎓 &lt;b&gt;GRADUATION&lt;/b&gt;&lt;br&gt;Recurring patterns&lt;br&gt;auto-synthesize into&lt;br&gt;Tier 1 rules" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#2e7d32;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="5" y="420" width="130" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Summary box -->
+        <mxCell id="summary" value="&lt;b&gt;OVER TIME&lt;/b&gt;: More fields handled by Tier 1 (free) → Fewer LLM calls → Cost decreases while accuracy increases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#1a1a2e;fontColor=#ffffff;fontSize=13;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="730" width="900" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Maturity distribution -->
+        <mxCell id="dist-title" value="&lt;b&gt;Field Distribution by Maturity&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=12;fontColor=#333;" vertex="1" parent="1">
+          <mxGeometry x="400" y="800" width="300" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="dist-early" value="&lt;b&gt;Week 1 (0 corrections)&lt;/b&gt;&lt;br&gt;Tier 1: 0% | Tier 2: 60% | Tier 3: 40%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="150" y="830" width="300" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dist-mature" value="&lt;b&gt;Month 4+ (50 corrections, rules active)&lt;/b&gt;&lt;br&gt;Tier 1: 50-70% | Tier 2: 25-40% | Tier 3: 2-5%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4caf50;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="830" width="350" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dist-arrow" style="strokeWidth=2;strokeColor=#999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="855" as="sourcePoint" />
+            <mxPoint x="545" y="855" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
