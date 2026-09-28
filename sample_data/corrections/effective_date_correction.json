@@ -1,0 +1,8 @@
+{
+  "field_name": "effective_date",
+  "document_type": "Amendment",
+  "original_value": "2020-01-15",
+  "corrected_value": "2024-09-15",
+  "correction_reason": "For amendments, the effective date is when the AMENDMENT takes effect, not the original agreement date. The amendment states 'effective as of September 15, 2024' which is the amendment's own effective date. The 2020-01-15 date is from the original agreement being amended.",
+  "document_excerpt": "This First Amendment is effective as of September 15, 2024, and amends that certain Master Service Agreement dated January 15, 2020."
+}

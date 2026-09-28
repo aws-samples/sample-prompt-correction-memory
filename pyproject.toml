@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aws-samples-prompt-correction-memory"
+version = "0.1.0"
+description = "Sample code demonstrating automated prompt self-correction for LLM document extraction on AWS. Each human correction improves future extractions — no retraining, no redeployment."
+readme = "README.md"
+license = {text = "MIT-0"}
+requires-python = ">=3.9"
+dependencies = ["boto3>=1.34"]
+keywords = [
+    "llm",
+    "document-extraction",
+    "prompt-correction-memory",
+    "self-healing",
+    "few-shot-learning",
+    "correction-memory",
+    "bedrock",
+    "prompt-optimization",
+    "intelligent-document-processing",
+    "confidence-routing",
+    "self-correction",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: General",
+]
+
+[[project.authors]]
+name = "avneet-bansal-aws"
+
+[project.urls]
+Homepage = "https://github.com/aws-samples/sample-prompt-correction-memory"
+Repository = "https://github.com/aws-samples/sample-prompt-correction-memory"
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "pytest-cov>=4.0", "hypothesis>=6.0", "moto>=5.0"]
+dashboard = ["streamlit>=1.20", "plotly>=5.0"]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.format]
+# black wraps code at 88 but intentionally leaves long string literals and
+# comments intact; allow a little headroom so those are not flagged.
+max-line-length = 120
+
+[tool.pylint."messages control"]
+# Docstring conventions are enforced by review, not the linter, for this sample.
+# The remaining disables are deliberate design choices for readable reference
+# code: lazy imports of optional deps, broad excepts around best-effort I/O,
+# Lambda handler signatures, and small structural thresholds.
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-locals",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "too-many-instance-attributes",
+    "too-many-return-statements",
+    "too-few-public-methods",
+    "broad-exception-caught",
+    "import-outside-toplevel",
+    "duplicate-code",
+    "unused-argument",
+    "redefined-outer-name",
+    # black governs code line length (88); the only remaining long lines are
+    # unsplittable string literals (LLM prompts, sample JSON), so line-length
+    # is not enforced separately by pylint.
+    "line-too-long",
+]

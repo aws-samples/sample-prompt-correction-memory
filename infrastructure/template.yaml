@@ -1,0 +1,454 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sample-prompt-correction-memory — automated prompt self-correction
+  using Amazon Bedrock, DynamoDB, and S3.
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+  ExtractionModel:
+    Type: String
+    Default: us.anthropic.claude-haiku-4-5-20251001-v1:0
+  SelfHealingModel:
+    Type: String
+    Default: us.anthropic.claude-sonnet-4-20250514-v1:0
+  ConfidenceThreshold:
+    Type: String
+    Default: "0.7"
+
+Globals:
+  Function:
+    Runtime: python3.11
+    Timeout: 300
+    MemorySize: 256
+    Environment:
+      Variables:
+        CORRECTION_TABLE: !Ref CorrectionLogTable
+        RESULTS_TABLE: !Ref ExtractionResultsTable
+        DOCUMENT_BUCKET: !Ref DocumentBucket
+        EXTRACTION_MODEL: !Ref ExtractionModel
+        SELF_HEALING_MODEL: !Ref SelfHealingModel
+        CONFIDENCE_THRESHOLD: !Ref ConfidenceThreshold
+        # Lambda's filesystem is read-only except /tmp. Rule and calibration
+        # state is written under HOME, so point HOME at the writable /tmp.
+        # Note: this state is per-instance and NOT persisted across invocations
+        # or instances in Lambda.
+        HOME: /tmp
+
+Resources:
+  # ── KMS Customer Managed Key ──
+  # Single CMK used to encrypt DynamoDB tables and SQS queues at rest.
+  EncryptionKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: !Sub CMK for sample-prompt-correction-memory resources (${Environment})
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: EnableRootAccountAdmin
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:root
+            Action: kms:*
+            Resource: "*"
+          - Sid: AllowEventBridgeUseOfKey
+            Effect: Allow
+            Principal:
+              Service: events.amazonaws.com
+            Action:
+              - kms:Decrypt
+              - kms:GenerateDataKey
+            # "*" here scopes to this key (the key this policy is attached to),
+            # not all keys. The SourceArn condition restricts use to the
+            # document-upload rule, preventing a confused-deputy via another
+            # EventBridge rule in the account. The rule ARN is built with !Sub
+            # (not !GetAtt) to avoid a circular dependency
+            # (key -> rule -> queue -> key).
+            Resource: "*"
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !Sub arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/document-upload-${Environment}
+
+  EncryptionKeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub alias/sample-prompt-correction-memory-${Environment}
+      TargetKeyId: !Ref EncryptionKey
+
+  # ── S3 Access Log Bucket ──
+  AccessLogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub sample-prompt-correction-memory-logs-${AWS::AccountId}-${Environment}
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      # Self-logging under a dedicated prefix. S3 supports a log bucket
+      # delivering its own access logs to itself, which satisfies access
+      # logging requirements without a separate bucket.
+      LoggingConfiguration:
+        LogFilePrefix: self-access-logs/
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # Grants the S3 logging service permission to write access logs to the bucket.
+  AccessLogBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref AccessLogBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: S3ServerAccessLogsPolicy
+            Effect: Allow
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Action: s3:PutObject
+            Resource: !Sub ${AccessLogBucket.Arn}/*
+            Condition:
+              ArnLike:
+                aws:SourceArn:
+                  - !Sub arn:${AWS::Partition}:s3:::sample-prompt-correction-memory-docs-${AWS::AccountId}-${Environment}
+                  - !Sub arn:${AWS::Partition}:s3:::sample-prompt-correction-memory-logs-${AWS::AccountId}-${Environment}
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+          # Enforce TLS: deny any request made over an insecure transport.
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !GetAtt AccessLogBucket.Arn
+              - !Sub ${AccessLogBucket.Arn}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+
+  # ── S3 Bucket ──
+  DocumentBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub sample-prompt-correction-memory-docs-${AWS::AccountId}-${Environment}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      LoggingConfiguration:
+        DestinationBucketName: !Ref AccessLogBucket
+        LogFilePrefix: document-bucket-access-logs/
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      NotificationConfiguration:
+        EventBridgeConfiguration:
+          EventBridgeEnabled: true
+
+  # Enforce TLS on the document bucket: deny any non-HTTPS request.
+  DocumentBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref DocumentBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !GetAtt DocumentBucket.Arn
+              - !Sub ${DocumentBucket.Arn}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+
+  # ── DynamoDB Tables ──
+  CorrectionLogTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub correction-log-${Environment}
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: field_name
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: field_name
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+      SSESpecification:
+        SSEEnabled: true
+        SSEType: KMS
+        KMSMasterKeyId: !Ref EncryptionKey
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  ExtractionResultsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub extraction-results-${Environment}
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: document_id
+          AttributeType: S
+        - AttributeName: field_name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: document_id
+          KeyType: HASH
+        - AttributeName: field_name
+          KeyType: RANGE
+      SSESpecification:
+        SSEEnabled: true
+        SSEType: KMS
+        KMSMasterKeyId: !Ref EncryptionKey
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  # ── Lambda Log Groups ──
+  # Explicit log groups with retention so logs do not accumulate indefinitely.
+  ExtractionFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/extraction-${Environment}
+      RetentionInDays: 14
+
+  FeedbackFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/feedback-ingestion-${Environment}
+      RetentionInDays: 14
+
+  # ── Lambda Functions ──
+  # Dead-letter queue for asynchronous Lambda invocation failures.
+  LambdaDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub lambda-dlq-${Environment}
+      MessageRetentionPeriod: 1209600
+      KmsMasterKeyId: !Ref EncryptionKey
+      KmsDataKeyReusePeriodSeconds: 300
+
+  ExtractionFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      checkov:
+        skip:
+          - id: CKV_AWS_117
+            comment: >-
+              Sample/reference implementation. The functions only call regional
+              AWS service endpoints (Bedrock, DynamoDB, S3, SQS) and require no
+              VPC resources; forcing VPC networking would add undue complexity
+              for a demonstration sample. Adopters should place functions in a
+              VPC as appropriate for their environment.
+    Properties:
+      FunctionName: !Sub extraction-${Environment}
+      Handler: src.extraction.handler.handler
+      CodeUri: ..
+      Timeout: 900
+      MemorySize: 512
+      # Encrypt environment variables with the customer-managed CMK.
+      KmsKeyArn: !GetAtt EncryptionKey.Arn
+      # Cap concurrency to protect downstream Bedrock/DynamoDB throughput.
+      ReservedConcurrentExecutions: 5
+      # Route failed async invocations to a dead-letter queue.
+      DeadLetterQueue:
+        Type: SQS
+        TargetArn: !GetAtt LambdaDLQ.Arn
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ExtractionResultsTable
+        - DynamoDBReadPolicy:
+            TableName: !Ref CorrectionLogTable
+        - S3ReadPolicy:
+            BucketName: !Ref DocumentBucket
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt LambdaDLQ.QueueName
+        # Allow the function to receive/delete messages from its trigger queue.
+        - SQSPollerPolicy:
+            QueueName: !GetAtt ExtractionQueue.QueueName
+        - Statement:
+            # Bedrock invocation is scoped to the specific extraction and
+            # self-healing models this sample uses, plus their cross-region
+            # inference profiles, rather than all Bedrock resources.
+            #
+            # The cross-region inference profile IDs (e.g. us.anthropic...) map
+            # to underlying foundation-model ARNs that carry NO region prefix,
+            # so both forms are granted below.
+            #
+            # ADOPTER GUIDANCE (see THREAT_MODEL.md, RR-1): Before production
+            # use, restrict these ARNs to only the exact model IDs you enable
+            # and pin the region in place of the '*' wildcard. Do NOT widen this
+            # back to 'Resource: "*"', which would grant invocation of every
+            # Bedrock model in the account.
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource:
+                - !Sub arn:${AWS::Partition}:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0
+                - !Sub arn:${AWS::Partition}:bedrock:*::foundation-model/anthropic.claude-sonnet-4-20250514-v1:0
+                - !Sub arn:${AWS::Partition}:bedrock:*::foundation-model/amazon.titan-embed-text-v2:0
+                - !Sub arn:${AWS::Partition}:bedrock:*:${AWS::AccountId}:inference-profile/${ExtractionModel}
+                - !Sub arn:${AWS::Partition}:bedrock:*:${AWS::AccountId}:inference-profile/${SelfHealingModel}
+            - Effect: Allow
+              Action:
+                - kms:Decrypt
+                - kms:GenerateDataKey
+              Resource: !GetAtt EncryptionKey.Arn
+
+  FeedbackFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      checkov:
+        skip:
+          - id: CKV_AWS_117
+            comment: >-
+              Sample/reference implementation. The functions only call regional
+              AWS service endpoints (DynamoDB, S3, SQS) and require no VPC
+              resources; forcing VPC networking would add undue complexity for a
+              demonstration sample. Adopters should place functions in a VPC as
+              appropriate for their environment.
+    Properties:
+      FunctionName: !Sub feedback-ingestion-${Environment}
+      Handler: src.feedback.handler.handler
+      CodeUri: ..
+      # Encrypt environment variables with the customer-managed CMK.
+      KmsKeyArn: !GetAtt EncryptionKey.Arn
+      ReservedConcurrentExecutions: 5
+      DeadLetterQueue:
+        Type: SQS
+        TargetArn: !GetAtt LambdaDLQ.Arn
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CorrectionLogTable
+        - S3ReadPolicy:
+            BucketName: !Ref DocumentBucket
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt LambdaDLQ.QueueName
+        - Statement:
+            - Effect: Allow
+              Action:
+                - kms:Decrypt
+                - kms:GenerateDataKey
+              Resource: !GetAtt EncryptionKey.Arn
+
+  # ── SQS Queue (throttling) ──
+  ExtractionQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub extraction-queue-${Environment}
+      VisibilityTimeout: 960
+      MessageRetentionPeriod: 86400
+      KmsMasterKeyId: !Ref EncryptionKey
+      KmsDataKeyReusePeriodSeconds: 300
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt ExtractionDLQ.Arn
+        maxReceiveCount: 3
+
+  ExtractionDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub extraction-dlq-${Environment}
+      MessageRetentionPeriod: 1209600
+      KmsMasterKeyId: !Ref EncryptionKey
+      KmsDataKeyReusePeriodSeconds: 300
+
+  ExtractionQueuePolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      Queues: [!Ref ExtractionQueue]
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: events.amazonaws.com
+            Action: sqs:SendMessage
+            Resource: !GetAtt ExtractionQueue.Arn
+            # Confused-deputy prevention: only the document-upload rule may
+            # send to this queue.
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !GetAtt DocumentUploadRule.Arn
+
+  # SQS → Lambda mapping
+  ExtractionEventSource:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt ExtractionQueue.Arn
+      FunctionName: !Ref ExtractionFunction
+      BatchSize: 1
+      ScalingConfig:
+        MaximumConcurrency: 5
+
+  # ── EventBridge Rules ──
+  DocumentUploadRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub document-upload-${Environment}
+      Description: Routes document uploads to extraction queue
+      EventPattern:
+        source: [aws.s3]
+        detail-type: [Object Created]
+        detail:
+          bucket:
+            name: [!Ref DocumentBucket]
+          object:
+            key: [{prefix: "documents/"}]
+      Targets:
+        - Id: extraction-queue
+          Arn: !GetAtt ExtractionQueue.Arn
+
+  CorrectionUploadRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub correction-upload-${Environment}
+      Description: Routes correction file uploads to feedback Lambda
+      EventPattern:
+        source: [aws.s3]
+        detail-type: [Object Created]
+        detail:
+          bucket:
+            name: [!Ref DocumentBucket]
+          object:
+            key: [{prefix: "corrections/"}]
+      Targets:
+        - Id: feedback-function
+          Arn: !GetAtt FeedbackFunction.Arn
+
+  FeedbackInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref FeedbackFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt CorrectionUploadRule.Arn
+
+Outputs:
+  DocumentBucketName:
+    Value: !Ref DocumentBucket
+  CorrectionLogTableName:
+    Value: !Ref CorrectionLogTable
+  ExtractionResultsTableName:
+    Value: !Ref ExtractionResultsTable
+  ExtractionFunctionArn:
+    Value: !GetAtt ExtractionFunction.Arn
+  FeedbackFunctionArn:
+    Value: !GetAtt FeedbackFunction.Arn
