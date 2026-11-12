@@ -2,7 +2,7 @@
 
 **A sample project showing automated prompt self-correction for LLM document extraction on AWS. Each human correction improves future extractions — no retraining, no redeployment.**
 
-![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT--0-blue) ![Status](https://img.shields.io/badge/status-sample-orange)
+![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT--0-blue) ![Status](https://img.shields.io/badge/status-sample-orange) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24150043.svg)](https://doi.org/10.5281/zenodo.24150043)
 
 > **Disclaimer:** This is sample code, for non-production usage. You should work with your security and legal teams to meet your organizational security, regulatory and compliance requirements before deployment. Do not use this sample with personal data, health data or other regulated data.
 
@@ -421,6 +421,14 @@ pytest tests/ -v
 
 For questions or contributions, please open an issue on this repository.
 
+
+## Citation
+
+If you use this sample in research or a publication, please cite it. GitHub's "Cite this repository" button uses [CITATION.cff](CITATION.cff).
+
+> Bansal, A. (2026). *prompt-correction-memory: self-correcting prompts for LLM document extraction* (Version 0.1.2) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24150044
+
+The concept DOI [10.5281/zenodo.24150043](https://doi.org/10.5281/zenodo.24150043) always resolves to the latest version.
 
 ## License
 

@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+type: software
+title: "prompt-correction-memory: self-correcting prompts for LLM document extraction"
+abstract: >-
+  Sample code for a correction memory that lets an LLM document-extraction
+  pipeline learn from human corrections. Each correction is stored and fed back
+  as few-shot guidance, and repeated corrections graduate into deterministic
+  rules, so the same extraction mistake stops recurring without retraining or
+  redeployment.
+authors:
+  - family-names: Bansal
+    given-names: Avneet
+    affiliation: "Amazon Web Services"
+version: 0.1.2
+date-released: 2026-09-28
+license: MIT-0
+doi: 10.5281/zenodo.24150044
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24150043
+    description: "Concept DOI, resolves to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.24150044
+    description: "DOI for this version"
+repository-code: "https://github.com/aws-samples/sample-prompt-correction-memory"
+keywords:
+  - large language models
+  - document extraction
+  - prompt engineering
+  - self-correction
+  - few-shot learning
+  - human-in-the-loop
+  - Amazon Bedrock
